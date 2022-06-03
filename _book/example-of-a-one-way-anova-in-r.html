@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Example of a one-way ANOVA in R | Module 2</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Example of a one-way ANOVA in R | Module 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Example of a one-way ANOVA in R | Module 2" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Leo Ohyama" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression-challenge.html"/>
+<link rel="next" href="extra-data-visualization.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html"><i class="fa fa-check"></i><b>2</b> Introduction to Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#continuous-variables"><i class="fa fa-check"></i><b>2.1</b> Continuous Variables</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#scatterplots-with-base-r"><i class="fa fa-check"></i><b>2.1.1</b> Scatterplots with base R</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#scatterplots-with-ggplot2"><i class="fa fa-check"></i><b>2.1.2</b> Scatterplots with ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#fancy-scatterplots"><i class="fa fa-check"></i><b>2.2</b> Fancy Scatterplots</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#continuous-variables-1"><i class="fa fa-check"></i><b>2.3</b> Continuous Variables</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#boxplots-with-base-r"><i class="fa fa-check"></i><b>2.3.1</b> Boxplots with base R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#different-types-of-plots-for-categorical-data-with-ggplot2"><i class="fa fa-check"></i><b>2.4</b> Different types of plots for categorical data with ggplot2</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#adding-colors-and-summary-statistics-e.g.-averages-to-plots"><i class="fa fa-check"></i><b>2.4.1</b> Adding colors and summary statistics (e.g. averages) to plots</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#breakout-group-challenge"><i class="fa fa-check"></i><b>2.5</b> Breakout group challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-regression.html"><a href="introduction-to-regression.html"><i class="fa fa-check"></i><b>3</b> Introduction to Regression</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-regression.html"><a href="introduction-to-regression.html#an-example-of-linear-regression-in-r"><i class="fa fa-check"></i><b>3.1</b> An Example of Linear Regression in R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression-challenge.html"><a href="regression-challenge.html"><i class="fa fa-check"></i><b>4</b> Regression Challenge</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="regression-challenge.html"><a href="regression-challenge.html#introduction-to-anova"><i class="fa fa-check"></i><b>4.1</b> Introduction to ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="example-of-a-one-way-anova-in-r.html"><a href="example-of-a-one-way-anova-in-r.html"><i class="fa fa-check"></i><b>5</b> Example of a one-way ANOVA in R</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="example-of-a-one-way-anova-in-r.html"><a href="example-of-a-one-way-anova-in-r.html#anova-challenge"><i class="fa fa-check"></i><b>5.1</b> ANOVA Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html"><i class="fa fa-check"></i><b>6</b> Extra Data Visualization</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#adding-averages-to-plots-part-2"><i class="fa fa-check"></i><b>6.1</b> Adding averages to plots part 2</a></li>
+<li class="chapter" data-level="6.2" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#r-challenge"><i class="fa fa-check"></i><b>6.2</b> R Challenge</a></li>
+<li class="chapter" data-level="6.3" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#a.-data-management-part-1"><i class="fa fa-check"></i><b>6.3</b> 2A. Data Management Part 1</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#making-and-modifying-variables"><i class="fa fa-check"></i><b>6.3.1</b> Making and modifying variables</a></li>
+<li class="chapter" data-level="6.3.2" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#variables-with-the-tidyverse"><i class="fa fa-check"></i><b>6.3.2</b> Variables with the tidyverse</a></li>
+<li class="chapter" data-level="6.3.3" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#reshape-data-for-better-usability"><i class="fa fa-check"></i><b>6.3.3</b> Reshape data for better usability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#b.-data-management-part-2"><i class="fa fa-check"></i><b>6.4</b> 2B. Data Management Part 2</a></li>
+<li class="chapter" data-level="6.5" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#c.-data-exploration"><i class="fa fa-check"></i><b>6.5</b> 2C. Data Exploration</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#distributions-summary-statistics"><i class="fa fa-check"></i><b>6.5.1</b> Distributions &amp; summary statistics</a></li>
+<li class="chapter" data-level="6.5.2" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#examining-for-outliers"><i class="fa fa-check"></i><b>6.5.2</b> Examining for outliers</a></li>
+<li class="chapter" data-level="6.5.3" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#explore-relationships"><i class="fa fa-check"></i><b>6.5.3</b> Explore relationships</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Module 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="example-of-a-one-way-anova-in-r" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Example of a one-way ANOVA in R<a href="example-of-a-one-way-anova-in-r.html#example-of-a-one-way-anova-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>For this section we will use the insect spray dataset</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="example-of-a-one-way-anova-in-r.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;InsectSprays&quot;</span>)</span>
+<span id="cb69-2"><a href="example-of-a-one-way-anova-in-r.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(InsectSprays)</span></code></pre></div>
+<pre><code>##   count spray
+## 1    10     A
+## 2     7     A
+## 3    20     A
+## 4    14     A
+## 5    14     A
+## 6    12     A</code></pre>
+<p>Let’s filter to just 4 treatments.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="example-of-a-one-way-anova-in-r.html#cb71-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> InsectSprays <span class="sc">%&gt;%</span> <span class="fu">filter</span>(spray<span class="sc">==</span><span class="st">&#39;A&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;B&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;C&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;F&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="example-of-a-one-way-anova-in-r.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span></code></pre></div>
+<p>Now plot the data.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="example-of-a-one-way-anova-in-r.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x=</span>spray,<span class="at">y=</span>count)) <span class="sc">+</span> </span>
+<span id="cb72-2"><a href="example-of-a-one-way-anova-in-r.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> <span class="co"># need to suppress outliers if you jitter plot points</span></span>
+<span id="cb72-3"><a href="example-of-a-one-way-anova-in-r.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>,<span class="at">width=</span>.<span class="dv">1</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Let’s construct linear model to examine the effect of the different sprays on insect counts. For a categorical variable (spray with four levels), we are interested in comparing group means.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="example-of-a-one-way-anova-in-r.html#cb73-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(count<span class="sc">~</span>spray, <span class="at">data=</span>d) </span></code></pre></div>
+<p>To compare group means we can use the Anova().</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="example-of-a-one-way-anova-in-r.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(lm1, <span class="at">type=</span><span class="dv">2</span>) </span></code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: count
+##            Sum Sq Df F value    Pr(&gt;F)    
+## spray     1648.73  3  26.478 6.091e-10 ***
+## Residuals  913.25 44                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>In the above case, the null hypothesis that all group means are equal. Specifying the argument, “type =,” to 2 provides Type II sums of squares, which is usually better than the default Type I, especially for more complicated models. Other functions (anova(), aov(), etc.) will provide similar ANOVA tables, but the Anova() is more flexible.</p>
+<p>Let’s look at the summary of the model.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="example-of-a-one-way-anova-in-r.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = count ~ spray, data = d)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.3333 -2.3750 -0.5833  2.0625  9.3333 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  14.5000     1.3152  11.025 3.02e-14 ***
+## sprayB        0.8333     1.8599   0.448    0.656    
+## sprayC      -12.4167     1.8599  -6.676 3.42e-08 ***
+## sprayF        2.1667     1.8599   1.165    0.250    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.556 on 44 degrees of freedom
+## Multiple R-squared:  0.6435, Adjusted R-squared:  0.6192 
+## F-statistic: 26.48 on 3 and 44 DF,  p-value: 6.091e-10</code></pre>
+<p>Rebuilding the model from the coefficients is not super helpful and the p-values aren’t very meaningful.</p>
+<p>Let’s use the package emmeans and the function emmeans which will rebuild the model for you. It will print off the means, SE, and confidence intervals for each treatment group</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="example-of-a-one-way-anova-in-r.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm1, <span class="sc">~</span>spray) </span></code></pre></div>
+<pre><code>##  spray emmean   SE df lower.CL upper.CL
+##  A      14.50 1.32 44   11.849    17.15
+##  B      15.33 1.32 44   12.683    17.98
+##  C       2.08 1.32 44   -0.567     4.73
+##  F      16.67 1.32 44   14.016    19.32
+## 
+## Confidence level used: 0.95</code></pre>
+<p>We can also look at pairwise differences between groups and automatically adjust p-values using “tukey” adjust.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="example-of-a-one-way-anova-in-r.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm1, pairwise<span class="sc">~</span>spray) </span></code></pre></div>
+<pre><code>## $emmeans
+##  spray emmean   SE df lower.CL upper.CL
+##  A      14.50 1.32 44   11.849    17.15
+##  B      15.33 1.32 44   12.683    17.98
+##  C       2.08 1.32 44   -0.567     4.73
+##  F      16.67 1.32 44   14.016    19.32
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast estimate   SE df t.ratio p.value
+##  A - B      -0.833 1.86 44  -0.448  0.9697
+##  A - C      12.417 1.86 44   6.676  &lt;.0001
+##  A - F      -2.167 1.86 44  -1.165  0.6518
+##  B - C      13.250 1.86 44   7.124  &lt;.0001
+##  B - F      -1.333 1.86 44  -0.717  0.8899
+##  C - F     -14.583 1.86 44  -7.841  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<p>We should also check assumptions of the model.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="example-of-a-one-way-anova-in-r.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(lm1<span class="sc">$</span>residuals) <span class="do">## residuals should be normally distributed</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="example-of-a-one-way-anova-in-r.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm1<span class="sc">$</span>residuals<span class="sc">~</span>lm1<span class="sc">$</span>fitted.values)  <span class="do">## residuals should be evenly dispersed</span></span>
+<span id="cb83-2"><a href="example-of-a-one-way-anova-in-r.html#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)                           </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-68-2.png" width="960" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="example-of-a-one-way-anova-in-r.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(lm1<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## [1] 45 46</code></pre>
+<p>Boxplots of residuals across treatment types should show that the variances should be homogeneous for each group.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="example-of-a-one-way-anova-in-r.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(lm1<span class="sc">$</span>residuals <span class="sc">~</span> d<span class="sc">$</span>spray)  </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Problems with residuals indicate assumptions of the linear model are violated and may cause problems with coefficients and p-values. Transforming the data or using a different type of model may help (we will return to this example later in the course to improve it). Once again, assumptions can be slightly violated without causing problems, for example this model is seems passable but could be better. It is best practice to be transparent with residual diagnostics.</p>
+<div id="anova-challenge" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> ANOVA Challenge<a href="example-of-a-one-way-anova-in-r.html#anova-challenge" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Have a look at the dataset below. Baby chickens were fed different diets and they were weighed after 10 days. The variable ‘weight’ is the weight of a baby chicken (g); ‘feed’ is the type of type of diet the chicken was fed.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="example-of-a-one-way-anova-in-r.html#cb87-1" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> chickwts</span>
+<span id="cb87-2"><a href="example-of-a-one-way-anova-in-r.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d1)</span></code></pre></div>
+<pre><code>##   weight      feed
+## 1    179 horsebean
+## 2    160 horsebean
+## 3    136 horsebean
+## 4    227 horsebean
+## 5    217 horsebean
+## 6    168 horsebean</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Construct a linear model to analyze the data. Is there evidence at least one mean is different than another?</p></li>
+<li><p>How much variation in the data does the model explain?</p></li>
+<li><p>The feed ‘casein’ is the standard chicken diet. What types of feed are significantly worse than ‘casein.’ By how much are they worse?</p></li>
+<li><p>Are the assumptions met?</p></li>
+<li><p>Make a nice looking figure. show all the data.</p></li>
+</ol>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression-challenge.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="extra-data-visualization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-Module_1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

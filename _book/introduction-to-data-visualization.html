@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduction to Data Visualization | Module 2</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduction to Data Visualization | Module 2" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction to Data Visualization | Module 2" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Leo Ohyama" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="introduction-to-regression.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html"><i class="fa fa-check"></i><b>2</b> Introduction to Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#continuous-variables"><i class="fa fa-check"></i><b>2.1</b> Continuous Variables</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#scatterplots-with-base-r"><i class="fa fa-check"></i><b>2.1.1</b> Scatterplots with base R</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#scatterplots-with-ggplot2"><i class="fa fa-check"></i><b>2.1.2</b> Scatterplots with ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#fancy-scatterplots"><i class="fa fa-check"></i><b>2.2</b> Fancy Scatterplots</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#continuous-variables-1"><i class="fa fa-check"></i><b>2.3</b> Continuous Variables</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#boxplots-with-base-r"><i class="fa fa-check"></i><b>2.3.1</b> Boxplots with base R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#different-types-of-plots-for-categorical-data-with-ggplot2"><i class="fa fa-check"></i><b>2.4</b> Different types of plots for categorical data with ggplot2</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#adding-colors-and-summary-statistics-e.g.-averages-to-plots"><i class="fa fa-check"></i><b>2.4.1</b> Adding colors and summary statistics (e.g. averages) to plots</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-data-visualization.html"><a href="introduction-to-data-visualization.html#breakout-group-challenge"><i class="fa fa-check"></i><b>2.5</b> Breakout group challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-regression.html"><a href="introduction-to-regression.html"><i class="fa fa-check"></i><b>3</b> Introduction to Regression</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-regression.html"><a href="introduction-to-regression.html#an-example-of-linear-regression-in-r"><i class="fa fa-check"></i><b>3.1</b> An Example of Linear Regression in R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression-challenge.html"><a href="regression-challenge.html"><i class="fa fa-check"></i><b>4</b> Regression Challenge</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="regression-challenge.html"><a href="regression-challenge.html#introduction-to-anova"><i class="fa fa-check"></i><b>4.1</b> Introduction to ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="example-of-a-one-way-anova-in-r.html"><a href="example-of-a-one-way-anova-in-r.html"><i class="fa fa-check"></i><b>5</b> Example of a one-way ANOVA in R</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="example-of-a-one-way-anova-in-r.html"><a href="example-of-a-one-way-anova-in-r.html#anova-challenge"><i class="fa fa-check"></i><b>5.1</b> ANOVA Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html"><i class="fa fa-check"></i><b>6</b> Extra Data Visualization</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#adding-averages-to-plots-part-2"><i class="fa fa-check"></i><b>6.1</b> Adding averages to plots part 2</a></li>
+<li class="chapter" data-level="6.2" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#r-challenge"><i class="fa fa-check"></i><b>6.2</b> R Challenge</a></li>
+<li class="chapter" data-level="6.3" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#a.-data-management-part-1"><i class="fa fa-check"></i><b>6.3</b> 2A. Data Management Part 1</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#making-and-modifying-variables"><i class="fa fa-check"></i><b>6.3.1</b> Making and modifying variables</a></li>
+<li class="chapter" data-level="6.3.2" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#variables-with-the-tidyverse"><i class="fa fa-check"></i><b>6.3.2</b> Variables with the tidyverse</a></li>
+<li class="chapter" data-level="6.3.3" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#reshape-data-for-better-usability"><i class="fa fa-check"></i><b>6.3.3</b> Reshape data for better usability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#b.-data-management-part-2"><i class="fa fa-check"></i><b>6.4</b> 2B. Data Management Part 2</a></li>
+<li class="chapter" data-level="6.5" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#c.-data-exploration"><i class="fa fa-check"></i><b>6.5</b> 2C. Data Exploration</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#distributions-summary-statistics"><i class="fa fa-check"></i><b>6.5.1</b> Distributions &amp; summary statistics</a></li>
+<li class="chapter" data-level="6.5.2" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#examining-for-outliers"><i class="fa fa-check"></i><b>6.5.2</b> Examining for outliers</a></li>
+<li class="chapter" data-level="6.5.3" data-path="extra-data-visualization.html"><a href="extra-data-visualization.html#explore-relationships"><i class="fa fa-check"></i><b>6.5.3</b> Explore relationships</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Module 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-data-visualization" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction to Data Visualization<a href="introduction-to-data-visualization.html#introduction-to-data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>We will practice plotting data using the iris dataset.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-data-visualization.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris) <span class="co"># load data (already exists in base R)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introduction-to-data-visualization.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<div id="continuous-variables" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Continuous Variables<a href="introduction-to-data-visualization.html#continuous-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="scatterplots-with-base-r" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Scatterplots with base R<a href="introduction-to-data-visualization.html#scatterplots-with-base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Plotting sepal length by width</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-data-visualization.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Specify colors using the “col =” argument within the plot function wrapper.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-data-visualization.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can get more complex by specifying solid dots with separate colors for each species.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction-to-data-visualization.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris, </span>
+<span id="cb8-2"><a href="introduction-to-data-visualization.html#cb8-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">16</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;purple&quot;</span>)[iris<span class="sc">$</span>Species] ) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can specify to plot only one species by editing the “data=” argument. The “==” in the code means “exactly equals.” Using just “=” will not work.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-data-visualization.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### plot only the data for Iris virginica</span></span>
+<span id="cb9-2"><a href="introduction-to-data-visualization.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris[iris<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&#39;virginica&#39;</span>,]) <span class="do">## use brackets to select the columns you want</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Finally, we can add a standard linear trendline across the data.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-to-data-visualization.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris[iris<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&#39;virginica&#39;</span>,])</span>
+<span id="cb10-2"><a href="introduction-to-data-visualization.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(Sepal.Length<span class="sc">~</span>Sepal.Width,</span>
+<span id="cb10-3"><a href="introduction-to-data-visualization.html#cb10-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">data=</span>iris[iris<span class="sc">$</span>Species<span class="sc">==</span><span class="st">&#39;virginica&#39;</span>,]))  <span class="do">## adds line from lm</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scatterplots-with-ggplot2" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Scatterplots with ggplot2<a href="introduction-to-data-visualization.html#scatterplots-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We need the tidyverse package to use ggplot2.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-to-data-visualization.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="do">## install tidyverse if necessary</span></span></code></pre></div>
+<p>Let’s start with a simple plot of sepal length by width</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-data-visualization.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, </span>
+<span id="cb12-2"><a href="introduction-to-data-visualization.html#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb12-3"><a href="introduction-to-data-visualization.html#cb12-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span>              </span>
+<span id="cb12-4"><a href="introduction-to-data-visualization.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can also add colors to the points just liek base R using the “color =” argument within the geom_point function.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introduction-to-data-visualization.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb13-2"><a href="introduction-to-data-visualization.html#cb13-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span>                                               <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&#39;blue&#39;</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can also color the points by species by including the “color =” argument within the aes() wrapper in the first ggplot line. aes() sets the aesthetics of the plot based on the data that is being used. The data is specified with the “data =.”</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction-to-data-visualization.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb14-2"><a href="introduction-to-data-visualization.html#cb14-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length, </span>
+<span id="cb14-3"><a href="introduction-to-data-visualization.html#cb14-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color=</span>Species)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="introduction-to-data-visualization.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>What if we want to see the different species in different plot panels? We can do this by using facet_wrap(). facet_wrap() allows you to facet the plot by a a categorical variable from the dataset. In the example below, we facet the plot above by species.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-to-data-visualization.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb15-2"><a href="introduction-to-data-visualization.html#cb15-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length, </span>
+<span id="cb15-3"><a href="introduction-to-data-visualization.html#cb15-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color=</span>Species)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="introduction-to-data-visualization.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-5"><a href="introduction-to-data-visualization.html#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Now finally let’s redo the plots we did in base R. Let’s first plot only one species. We can do this by manipulating the data set being used within the “data =” argument. We filter the original dataset “iris” so that only a specific species is being used in the plot.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-data-visualization.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Species<span class="sc">==</span><span class="st">&#39;virginica&#39;</span>),</span>
+<span id="cb16-2"><a href="introduction-to-data-visualization.html#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb16-3"><a href="introduction-to-data-visualization.html#cb16-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span>                                       </span>
+<span id="cb16-4"><a href="introduction-to-data-visualization.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb16-5"><a href="introduction-to-data-visualization.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Plot with only Virginica&quot;</span>) <span class="co">#we can add a title to the plot using the labs() and specifying the &quot;title =&quot; argument</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Now let’s plot the data with a linear trendline. To do this we use geom_smooth(). Within geom_smooth() we use the argument “method =” to specify the type of trendline. Since we want a linear one based on a linear model we use “lm.”</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="introduction-to-data-visualization.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Species<span class="sc">==</span><span class="st">&#39;virginica&#39;</span>), </span>
+<span id="cb17-2"><a href="introduction-to-data-visualization.html#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb17-3"><a href="introduction-to-data-visualization.html#cb17-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span>                                         </span>
+<span id="cb17-4"><a href="introduction-to-data-visualization.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb17-5"><a href="introduction-to-data-visualization.html#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can also add a separate trendline for all three species. ggplot2 can do this in a very user friendly way. By specifying different colors for different species in the first ggplot() line, the usage of geom_smooth() automatically applies the categorization by colors to the trendlines resulting in separate trendlines for each species.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-data-visualization.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width,</span>
+<span id="cb18-2"><a href="introduction-to-data-visualization.html#cb18-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length, </span>
+<span id="cb18-3"><a href="introduction-to-data-visualization.html#cb18-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color=</span>Species)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="introduction-to-data-visualization.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="introduction-to-data-visualization.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>If we move the “color =” argument to the outside of the aes() and just specify a single color. it changes the colors of all points.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introduction-to-data-visualization.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width,</span>
+<span id="cb19-2"><a href="introduction-to-data-visualization.html#cb19-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span> </span>
+<span id="cb19-3"><a href="introduction-to-data-visualization.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span>   </span>
+<span id="cb19-4"><a href="introduction-to-data-visualization.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="introduction-to-data-visualization.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="fancy-scatterplots" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Fancy Scatterplots<a href="introduction-to-data-visualization.html#fancy-scatterplots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For more appealing color options we use the viridis package</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introduction-to-data-visualization.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis) <span class="do">## install viridis package if necassary</span></span></code></pre></div>
+<p>Let’s set up a basic plot from the examples shown above. The default colors work fine but could be better and the plot background could also be cleaner and more improved.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introduction-to-data-visualization.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb21-2"><a href="introduction-to-data-visualization.html#cb21-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length, <span class="at">color=</span>Species)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="introduction-to-data-visualization.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb21-4"><a href="introduction-to-data-visualization.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can change the background elements of the plot (a.k.a the “theme”) with preset defaults such as theme_bw()</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introduction-to-data-visualization.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, </span>
+<span id="cb22-2"><a href="introduction-to-data-visualization.html#cb22-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb22-3"><a href="introduction-to-data-visualization.html#cb22-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>Sepal.Length, </span>
+<span id="cb22-4"><a href="introduction-to-data-visualization.html#cb22-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span>Species)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="introduction-to-data-visualization.html#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb22-6"><a href="introduction-to-data-visualization.html#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="introduction-to-data-visualization.html#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can also change the size of the points by adding a “size =” argument in the geom_point(). Also, the colors can be improved (e.g. making them more color-blind friendly) by using the scale_color_virdis(). Within the virdis function, we specify that we want a discrete color scale with “discreet = TRUE.”</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introduction-to-data-visualization.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb23-2"><a href="introduction-to-data-visualization.html#cb23-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length, <span class="at">color=</span>Species)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="introduction-to-data-visualization.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="co"># change point size to make them bigger</span></span>
+<span id="cb23-4"><a href="introduction-to-data-visualization.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb23-5"><a href="introduction-to-data-visualization.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># change points to a color-blind friendly palette. Can specify specific colors</span></span>
+<span id="cb23-6"><a href="introduction-to-data-visualization.html#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co"># new theme</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can change the shapes of the points based on species with the “shape =” argument in the first ggplot() line. We specify that this argument equals “Species” which basically means, set different shapes for different species. We can further specify which shapes we want for the three species with the scale_shape_manual().</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-data-visualization.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width,</span>
+<span id="cb24-2"><a href="introduction-to-data-visualization.html#cb24-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length,</span>
+<span id="cb24-3"><a href="introduction-to-data-visualization.html#cb24-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">shape=</span>Species)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="introduction-to-data-visualization.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb24-5"><a href="introduction-to-data-visualization.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>) <span class="sc">+</span>                               </span>
+<span id="cb24-6"><a href="introduction-to-data-visualization.html#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;circle&quot;</span>,<span class="st">&quot;square&quot;</span>,<span class="st">&quot;triangle&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="introduction-to-data-visualization.html#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Let’s specify with colors and shapes. Here’s an annotated code chunk to show exactly what components are being specified for the plot.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-data-visualization.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, <span class="co">#Sets x axis variable</span></span>
+<span id="cb25-2"><a href="introduction-to-data-visualization.html#cb25-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length, <span class="co">#Sets y axis variable</span></span>
+<span id="cb25-3"><a href="introduction-to-data-visualization.html#cb25-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">shape=</span>Species, <span class="co">#use different shapes for species</span></span>
+<span id="cb25-4"><a href="introduction-to-data-visualization.html#cb25-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color=</span>Species <span class="co">#use different colors for species</span></span>
+<span id="cb25-5"><a href="introduction-to-data-visualization.html#cb25-5" aria-hidden="true" tabindex="-1"></a>                      )) <span class="sc">+</span>          </span>
+<span id="cb25-6"><a href="introduction-to-data-visualization.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span> <span class="co">#set size if points</span></span>
+<span id="cb25-7"><a href="introduction-to-data-visualization.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>) <span class="sc">+</span>  <span class="co">#set a linear model trendline           </span></span>
+<span id="cb25-8"><a href="introduction-to-data-visualization.html#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis</span>(<span class="at">discrete=</span>T) <span class="sc">+</span> <span class="co">#color palette</span></span>
+<span id="cb25-9"><a href="introduction-to-data-visualization.html#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;circle&quot;</span>,<span class="st">&quot;square&quot;</span>,<span class="st">&quot;triangle&quot;</span>)) <span class="sc">+</span> <span class="co">#specify which shapes       </span></span>
+<span id="cb25-10"><a href="introduction-to-data-visualization.html#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co">#different more black and white theme</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can also facet the plot above and increase the font size</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-data-visualization.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width, </span>
+<span id="cb26-2"><a href="introduction-to-data-visualization.html#cb26-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y=</span>Sepal.Length,</span>
+<span id="cb26-3"><a href="introduction-to-data-visualization.html#cb26-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">shape=</span>Species,</span>
+<span id="cb26-4"><a href="introduction-to-data-visualization.html#cb26-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb26-5"><a href="introduction-to-data-visualization.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb26-6"><a href="introduction-to-data-visualization.html#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>) <span class="sc">+</span>    </span>
+<span id="cb26-7"><a href="introduction-to-data-visualization.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis</span>(<span class="at">discrete=</span>T) <span class="sc">+</span>  </span>
+<span id="cb26-8"><a href="introduction-to-data-visualization.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;circle&quot;</span>,<span class="st">&quot;square&quot;</span>,<span class="st">&quot;triangle&quot;</span>)) <span class="sc">+</span>      </span>
+<span id="cb26-9"><a href="introduction-to-data-visualization.html#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species) <span class="sc">+</span> <span class="co">#facet by species</span></span>
+<span id="cb26-10"><a href="introduction-to-data-visualization.html#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="co"># increase font size for the entire plot</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="continuous-variables-1" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Continuous Variables<a href="introduction-to-data-visualization.html#continuous-variables-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="boxplots-with-base-r" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Boxplots with base R<a href="introduction-to-data-visualization.html#boxplots-with-base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This line of code will make a simple boxplot. Notice the usage of “~.” To avoid errors, make sure your continuous variable comes before “~” and your categorical variable comes after.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introduction-to-data-visualization.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Sepal.Length<span class="sc">~</span>Species, <span class="at">data=</span>iris) <span class="co">#make boxplot</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can add colors to the different boxplots</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introduction-to-data-visualization.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Sepal.Length<span class="sc">~</span>Species, <span class="at">data=</span>iris, <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;purple&quot;</span>)) <span class="co">#make boxplot with color</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="different-types-of-plots-for-categorical-data-with-ggplot2" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Different types of plots for categorical data with ggplot2<a href="introduction-to-data-visualization.html#different-types-of-plots-for-categorical-data-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To make a boxplot with ggplot we use geom_boxplot().</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="introduction-to-data-visualization.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="co">#variable on x axis</span></span>
+<span id="cb29-2"><a href="introduction-to-data-visualization.html#cb29-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>Sepal.Length <span class="co">#variable on y axis</span></span>
+<span id="cb29-3"><a href="introduction-to-data-visualization.html#cb29-3" aria-hidden="true" tabindex="-1"></a>                 )) <span class="sc">+</span> </span>
+<span id="cb29-4"><a href="introduction-to-data-visualization.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="co">#specify boxplot option</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can also overlay points on the boxplot.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introduction-to-data-visualization.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species,</span>
+<span id="cb30-2"><a href="introduction-to-data-visualization.html#cb30-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>Sepal.Length</span>
+<span id="cb30-3"><a href="introduction-to-data-visualization.html#cb30-3" aria-hidden="true" tabindex="-1"></a>                 )) <span class="sc">+</span> </span>
+<span id="cb30-4"><a href="introduction-to-data-visualization.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb30-5"><a href="introduction-to-data-visualization.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>To more clearly assess the scatter of the points we can jitter their position with geom_jitter()</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="introduction-to-data-visualization.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb31-2"><a href="introduction-to-data-visualization.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We may want to adjust how much jitter we give the points. This can be done with the “height =” and “width =” arguments.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="introduction-to-data-visualization.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, </span>
+<span id="cb32-2"><a href="introduction-to-data-visualization.html#cb32-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="introduction-to-data-visualization.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape=</span><span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="introduction-to-data-visualization.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">15</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can also make dot plots for the data using geom_dotplot().</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="introduction-to-data-visualization.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, </span>
+<span id="cb33-2"><a href="introduction-to-data-visualization.html#cb33-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span> </span>
+<span id="cb33-3"><a href="introduction-to-data-visualization.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="at">stackdir =</span> <span class="st">&quot;center&quot;</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>There are also violin plots with geom_violin().</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="introduction-to-data-visualization.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span> </span>
+<span id="cb34-2"><a href="introduction-to-data-visualization.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">trim=</span>F)  </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>A combination of violin plots with dot plots is also possible.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="introduction-to-data-visualization.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span> </span>
+<span id="cb35-2"><a href="introduction-to-data-visualization.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">trim=</span>F) <span class="sc">+</span> </span>
+<span id="cb35-3"><a href="introduction-to-data-visualization.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="at">stackdir =</span> <span class="st">&quot;center&quot;</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Finally, we can also do violin plots with boxplots!</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introduction-to-data-visualization.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span> </span>
+<span id="cb36-2"><a href="introduction-to-data-visualization.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">trim=</span>F, <span class="at">bw=</span>.<span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb36-3"><a href="introduction-to-data-visualization.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div id="adding-colors-and-summary-statistics-e.g.-averages-to-plots" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Adding colors and summary statistics (e.g. averages) to plots<a href="introduction-to-data-visualization.html#adding-colors-and-summary-statistics-e.g.-averages-to-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s change the color of the boxes. Note we don’t use the “color =” argument but instead use the “fill =” argument. This is because fill will affect the fill color inside the box while color will affect the color of the border of the box. As such, when we use the viridis function for the nicer colors, we specify scale_fill_virdis rather than scale_color_virdis.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="introduction-to-data-visualization.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, </span>
+<span id="cb37-2"><a href="introduction-to-data-visualization.html#cb37-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>Sepal.Length, </span>
+<span id="cb37-3"><a href="introduction-to-data-visualization.html#cb37-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb37-4"><a href="introduction-to-data-visualization.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape=</span><span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb37-5"><a href="introduction-to-data-visualization.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span> </span>
+<span id="cb37-6"><a href="introduction-to-data-visualization.html#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span>T) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>If we want to see the averages or means per species we can do this by using stat_summary() and specifying “mean” with the “fun =” argument.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="introduction-to-data-visualization.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length, <span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="introduction-to-data-visualization.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape=</span><span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb38-3"><a href="introduction-to-data-visualization.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span> </span>
+<span id="cb38-4"><a href="introduction-to-data-visualization.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span>T)  <span class="sc">+</span>             </span>
+<span id="cb38-5"><a href="introduction-to-data-visualization.html#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="do">## add point for mean</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Let’s edit the theme of the plot above</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="introduction-to-data-visualization.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length, <span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb39-2"><a href="introduction-to-data-visualization.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape=</span><span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb39-3"><a href="introduction-to-data-visualization.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span> </span>
+<span id="cb39-4"><a href="introduction-to-data-visualization.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span>T)  <span class="sc">+</span>             </span>
+<span id="cb39-5"><a href="introduction-to-data-visualization.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="introduction-to-data-visualization.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="co">#theme change</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>To save a plot like this as a .tiff we should first assign the plot as an object. In the example below we assign is as an object called “plot1” using the “&lt;-.”</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introduction-to-data-visualization.html#cb40-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length, <span class="at">fill=</span>Species)) <span class="sc">+</span>  <span class="do">## plot now saved as object called &#39;plot1&#39;</span></span>
+<span id="cb40-2"><a href="introduction-to-data-visualization.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape=</span><span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb40-3"><a href="introduction-to-data-visualization.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span> </span>
+<span id="cb40-4"><a href="introduction-to-data-visualization.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span>T)  <span class="sc">+</span>             </span>
+<span id="cb40-5"><a href="introduction-to-data-visualization.html#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="introduction-to-data-visualization.html#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>) </span></code></pre></div>
+<p>Then we use ggsave() to save the plot into whatever working directory you are using. We can set the dimensions of the image and we specify the plot we want to save using “plot1.”</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="introduction-to-data-visualization.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;ExamplePlot.tiff&quot;</span>, <span class="co">#file name to be used</span></span>
+<span id="cb41-2"><a href="introduction-to-data-visualization.html#cb41-2" aria-hidden="true" tabindex="-1"></a>       plot1, <span class="co">#what plot being saved</span></span>
+<span id="cb41-3"><a href="introduction-to-data-visualization.html#cb41-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">width=</span><span class="dv">4</span>, <span class="co">#width</span></span>
+<span id="cb41-4"><a href="introduction-to-data-visualization.html#cb41-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">height=</span><span class="dv">3</span>, <span class="co">#height</span></span>
+<span id="cb41-5"><a href="introduction-to-data-visualization.html#cb41-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">units=</span><span class="st">&quot;in&quot;</span>, <span class="co">#units being used for width and height</span></span>
+<span id="cb41-6"><a href="introduction-to-data-visualization.html#cb41-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi=</span><span class="dv">300</span>) <span class="co">#resolution of photo, higher number = better</span></span></code></pre></div>
+</div>
+</div>
+<div id="breakout-group-challenge" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Breakout group challenge<a href="introduction-to-data-visualization.html#breakout-group-challenge" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this challenge use the mtcars dataset:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="introduction-to-data-visualization.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb42-2"><a href="introduction-to-data-visualization.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<ol style="list-style-type: decimal">
+<li>Plot x=mpg by y=hp<br />
+</li>
+<li>Color code points by wt</li>
+<li>Add trendline. Make the background white. theme_bw is okay, if time try playing around with other themes.</li>
+<li>Make a boxplot of mpg for the three cyl groups. You should have three boxes. If only one, why?</li>
+<li>Change colors, themes, add datapoints, etc.</li>
+</ol>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-Module_1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
