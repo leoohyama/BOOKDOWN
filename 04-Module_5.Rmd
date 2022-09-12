@@ -1,0 +1,258 @@
+# Module 5
+
+## 5A. ANCOVAs in R
+
+We will need the following libraries:
+```{r}
+library(tidyverse)   
+library(car) ### helpful for analyzing linear models
+library(emmeans) ### helpful for getting means from linear models
+```
+
+Here we assemble data with  a covariate (don't worry about the code):
+```{r}
+set.seed(17)
+data("InsectSprays")
+d <- InsectSprays %>% filter(spray=='A'|spray=='B'|spray=='C'|spray=='F') %>%
+  droplevels()
+d$count[13:24] <- d$count[13:24]+5
+d$weeds <- abs(round(rnorm(48,2*d$count,10),1))
+d$weeds[25:36] <- c(55.3,46.8,30.2,62.3,24.2,33.2,18.2,12.6,39.7,41.0,46.9,42.8)
+```
+
+Let's plot the raw data:
+```{r}
+ggplot(d, aes(x=spray,y=count)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(height=0,width=.1) 
+```
+
+Let's run a model with counts as a function of spray (an ANOVA) and get the pairwise means:
+```{r}
+anova_means <- emmeans(lm(count~spray, data=d), pairwise~spray) 
+anova_means
+```
+
+Now let's plot out the data with weed cover:
+```{r}
+ggplot(d, aes(x=weeds,y=count)) +
+  geom_point() +
+  facet_wrap(~spray) +
+  geom_smooth(method='lm')
+```
+
+
+### ANCOVA: multiple intercept model
+
+Let's run our ANCOVA model:
+```{r}
+lm1i <- lm(count ~ spray + weeds, data=d)
+```
+
+Let's get an ANOVA table with Type II sums of squares (aka Type III SS):
+```{r}
+Anova(lm1i, type=2) 
+```
+
+Don't use the base anova! Switch terms around in the model and see what happens:
+```{r}
+anova(lm1i)  
+```
+```{r}
+summary(lm1i) ## model coefficients
+```
+
+Here we can calculate estimated marginal mean for each group (ie. groups means after accounting for the effect of weeds). We can extract the emmean means (ie. group means after accounting for the effect of weeds):
+```{r}
+ancova_means <- emmeans(lm1i, pairwise~spray)  
+ancova_means
+```
+
+This code is just for adding features of the model to the graph:
+```{r}
+lm1i_coef <- as.data.frame(emmeans(lm1i, ~spray))
+```
+
+
+Now let's extract intercepts and add slopes into new dataframe:
+```{r}
+lm1i_coef2 <- as.data.frame(emmeans(lm1i, ~spray, at=list(weeds=0)))
+lm1i_coef2$slope <- coef(lm1i)[5]
+```
+
+We can now plot the data with the fitted model:
+```{r}
+ggplot(data=d, aes(x=weeds,y=count)) +
+  geom_point() +
+  facet_wrap(~spray) + 
+  geom_abline(data=lm1i_coef2,
+              aes(intercept=emmean, slope=slope)) +
+  geom_point(data=lm1i_coef2,
+             aes(x=0,y=emmean),color="red") +
+  geom_point(data=lm1i_coef,
+             aes(x=mean(d$weeds),y=emmean),
+             color="blue", size=2)
+```
+
+### ANCOVA: multiple intercept AND slope model
+
+This is how we do an ANCOVA with multiple intercept and slopes:
+```{r}
+lm1is <- lm(count ~ spray + weeds + spray:weeds, data=d)
+
+```
+
+Another way to code the above would be:
+```{r}
+lm(count ~ spray * weeds, data=d)
+```
+
+Let's get an ANOVA table and a summary of the model:
+```{r}
+Anova(lm1is, type=2)
+summary(lm1is)
+```
+
+Here we calculate estimated marginal mean for each group (ie. groups means after accounting for the effect of weeds):
+```{r}
+ancova_is_means <- emmeans(lm1is, pairwise~spray)  
+ancova_is_means
+```
+
+We can calculate the slope for each group:
+```{r}
+ancova_is_slopes <- emtrends(lm1is, pairwise~spray, var="weeds")  
+ancova_is_slopes
+```
+
+We can extract the emmean means (ie. group means after accounting for the effect of weeds):
+```{r}
+lm1is_coef <- as.data.frame(emmeans(lm1is, ~spray))
+```
+
+Also we can extract intercepts and add slopes into new dataframe:
+```{r}
+lm1is_coef2a <- as.data.frame(emmeans(lm1is, ~spray, at=list(weeds=0)))
+lm1is_coef2b <- as.data.frame(emtrends(lm1is, var="weeds"))
+lm1is_coef2 <- full_join(lm1is_coef2a,lm1is_coef2b,by="spray")
+```
+
+Finally we can plot the data of the fitted model:
+```{r}
+ggplot(data=d, aes(x=weeds,y=count)) +
+  geom_point() +
+  facet_wrap(~spray) + 
+  geom_abline(data=lm1is_coef2, aes(intercept=emmean,
+                                    slope=weeds.trend), lty=2) +
+  geom_point(data=lm1is_coef2, 
+             aes(x=0,y=emmean),
+             color="orange") +
+  geom_point(data=lm1is_coef,
+             aes(x=mean(d$weeds),y=emmean),
+             color="purple", size=2)
+
+```
+
+Here's an alternative nice plot of the data with weed cover:
+```{r}
+ggplot(d, aes(x=weeds,y=count)) +
+  geom_point() + 
+  facet_wrap(~spray) + 
+  geom_smooth(method='lm', color='black')+
+  theme_bw(base_size = 16)
+```
+
+## 5B. Block Designs
+
+### Data and Plotting
+
+Let's load the packages and data:
+```{r}
+library(tidyverse)
+library(car)
+data("InsectSprays")
+```
+
+Now we can add our blocks to the data:
+```{r}
+InsectSprays$block <- as.factor(rep(c(1:12), 6)) 
+d <- InsectSprays %>%
+  filter(spray=='A'|spray=='B'|spray=='C'|spray=='F')
+glimpse(d)
+```
+
+We can graph the data by treatment group:
+```{r}
+#plot data by treatment group
+ggplot(d, aes(x=spray,y=count)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(height=0,width=.1)
+```
+
+A plot by treatment and block (note one observation per block):
+```{r}
+ggplot(d, aes(x=spray,y=count)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(height=0,width=.1) +
+  facet_wrap(~block)  #12 blocks
+```
+
+### Models
+
+This is a no block model:
+```{r}
+lm1 <- lm(count~spray, data=d)
+anova(lm1)
+```
+
+This is a block model (the block as a fixed effect).
+```{r}
+lm2 <- lm(count~spray+block, data=d)
+anova(lm2)
+```
+
+### Blocks as Random Effects 
+
+We need to load additional packages for this section
+```{r}
+library(lme4)
+library(lmerTest)
+```
+
+Here we set up a linear mixed effect model with a block as a random effect (random intercept):
+```{r}
+# block as random effect
+lm3 <- lmer(count~spray+(1|block), data=d)
+anova(lm3)
+```
+
+Now let's compare the model for blocks as fixed vs. random effects:
+```{r}
+# compare summary() for fixed vs. random blocking effect
+summary(lm2)
+summary(lm3)
+coef(lm3)    ## prints model coefficients
+```
+
+We can also print out the variance components from the model:
+```{r}
+print(VarCorr(lm3), comp=c("Variance"))  ## print variance components from model
+```
+
+Let's check residuals:
+```{r}
+plot(lm1$residuals~lm1$fitted.values) # check residuals of no block and block models
+plot(resid(lm3)~fitted(lm3))
+
+hist(lm1$residuals)
+hist(resid(lm3))
+```
+
+Finally, we can compare estimated marginal means:
+```{r}
+emmeans(lm2, pairwise~spray) ## fixed effect block
+emmeans(lm3, pairwise~spray) ## random effect block
+```
+
+
+

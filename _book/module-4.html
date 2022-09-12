@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Module 4 | Statistics in R</title>
+  <meta name="description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Module 4 | Statistics in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Module 4 | Statistics in R" />
+  
+  <meta name="twitter:description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Phil Hahn &amp; Leo Ohyama" />
+
+
+<meta name="date" content="2022-09-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="module-3.html"/>
+<link rel="next" href="module-5.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistics in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like <span>https://bookdown.org/yihui/bookdown</span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="module-2.html"><a href="module-2.html"><i class="fa fa-check"></i><b>2</b> Module 2</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="module-2.html"><a href="module-2.html#a.-introduction-to-data-visualization"><i class="fa fa-check"></i><b>2.1</b> 2A. Introduction to Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="module-2.html"><a href="module-2.html#continuous-variables"><i class="fa fa-check"></i><b>2.1.1</b> Continuous Variables</a></li>
+<li class="chapter" data-level="2.1.2" data-path="module-2.html"><a href="module-2.html#fancy-scatterplots"><i class="fa fa-check"></i><b>2.1.2</b> Fancy Scatterplots</a></li>
+<li class="chapter" data-level="2.1.3" data-path="module-2.html"><a href="module-2.html#continuous-variables-1"><i class="fa fa-check"></i><b>2.1.3</b> Continuous Variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="module-2.html"><a href="module-2.html#different-types-of-plots-for-categorical-data-with-ggplot2"><i class="fa fa-check"></i><b>2.1.4</b> Different types of plots for categorical data with ggplot2</a></li>
+<li class="chapter" data-level="2.1.5" data-path="module-2.html"><a href="module-2.html#breakout-group-challenge"><i class="fa fa-check"></i><b>2.1.5</b> Breakout group challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="module-2.html"><a href="module-2.html#b.-introduction-to-regression"><i class="fa fa-check"></i><b>2.2</b> 2B. Introduction to Regression</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="module-2.html"><a href="module-2.html#an-example-of-linear-regression-in-r"><i class="fa fa-check"></i><b>2.2.1</b> An Example of Linear Regression in R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="module-2.html"><a href="module-2.html#regression-challenge"><i class="fa fa-check"></i><b>2.2.2</b> Regression Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="module-2.html"><a href="module-2.html#c.-introduction-to-anova"><i class="fa fa-check"></i><b>2.3</b> 2C. Introduction to ANOVA</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="module-2.html"><a href="module-2.html#example-of-a-one-way-anova-in-r"><i class="fa fa-check"></i><b>2.3.1</b> Example of a one-way ANOVA in R</a></li>
+<li class="chapter" data-level="2.3.2" data-path="module-2.html"><a href="module-2.html#anova-challenge"><i class="fa fa-check"></i><b>2.3.2</b> ANOVA Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="module-2.html"><a href="module-2.html#extra-data-visualization"><i class="fa fa-check"></i><b>2.4</b> Extra Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="module-2.html"><a href="module-2.html#adding-averages-to-plots-part-2"><i class="fa fa-check"></i><b>2.4.1</b> Adding averages to plots part 2</a></li>
+<li class="chapter" data-level="2.4.2" data-path="module-2.html"><a href="module-2.html#r-challenge"><i class="fa fa-check"></i><b>2.4.2</b> R Challenge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="module-3.html"><a href="module-3.html"><i class="fa fa-check"></i><b>3</b> Module 3</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="module-3.html"><a href="module-3.html#a.-data-management"><i class="fa fa-check"></i><b>3.1</b> 3A. Data Management</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="module-3.html"><a href="module-3.html#making-and-modifying-variables"><i class="fa fa-check"></i><b>3.1.1</b> Making and modifying variables</a></li>
+<li class="chapter" data-level="3.1.2" data-path="module-3.html"><a href="module-3.html#variables-with-the-tidyverse"><i class="fa fa-check"></i><b>3.1.2</b> Variables with the tidyverse</a></li>
+<li class="chapter" data-level="3.1.3" data-path="module-3.html"><a href="module-3.html#reshape-data-for-better-usability"><i class="fa fa-check"></i><b>3.1.3</b> Reshape data for better usability</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="module-3.html"><a href="module-3.html#b.-data-exploration"><i class="fa fa-check"></i><b>3.2</b> 3B. Data Exploration</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="module-3.html"><a href="module-3.html#distributions-summary-statistics"><i class="fa fa-check"></i><b>3.2.1</b> Distributions &amp; summary statistics</a></li>
+<li class="chapter" data-level="3.2.2" data-path="module-3.html"><a href="module-3.html#examining-for-outliers"><i class="fa fa-check"></i><b>3.2.2</b> Examining for outliers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="module-3.html"><a href="module-3.html#explore-relationships"><i class="fa fa-check"></i><b>3.2.3</b> Explore relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="module-3.html"><a href="module-3.html#c.-model-selection"><i class="fa fa-check"></i><b>3.3</b> 3C. Model Selection</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="module-3.html"><a href="module-3.html#quick-introduction"><i class="fa fa-check"></i><b>3.3.1</b> Quick introduction</a></li>
+<li class="chapter" data-level="3.3.2" data-path="module-3.html"><a href="module-3.html#basic-calculations"><i class="fa fa-check"></i><b>3.3.2</b> Basic calculations</a></li>
+<li class="chapter" data-level="3.3.3" data-path="module-3.html"><a href="module-3.html#aicc"><i class="fa fa-check"></i><b>3.3.3</b> AICc</a></li>
+<li class="chapter" data-level="3.3.4" data-path="module-3.html"><a href="module-3.html#case-study-with-aic"><i class="fa fa-check"></i><b>3.3.4</b> Case study with AIC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="module-4.html"><a href="module-4.html"><i class="fa fa-check"></i><b>4</b> Module 4</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="module-4.html"><a href="module-4.html#a.-generalized-models"><i class="fa fa-check"></i><b>4.1</b> 4A. Generalized Models</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="module-4.html"><a href="module-4.html#example-conducting-a-one-way-anova-with-non-normal-data"><i class="fa fa-check"></i><b>4.1.1</b> Example: Conducting a one-way ANOVA with non-normal data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="module-4.html"><a href="module-4.html#log-linear-model"><i class="fa fa-check"></i><b>4.1.2</b> Log-linear model</a></li>
+<li class="chapter" data-level="4.1.3" data-path="module-4.html"><a href="module-4.html#generalized-linear-models"><i class="fa fa-check"></i><b>4.1.3</b> Generalized linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="module-4.html"><a href="module-4.html#b.-overdispersion"><i class="fa fa-check"></i><b>4.2</b> 4B. Overdispersion</a></li>
+<li class="chapter" data-level="4.3" data-path="module-4.html"><a href="module-4.html#c.-binomial-glm"><i class="fa fa-check"></i><b>4.3</b> 4C. Binomial GLM</a></li>
+<li class="chapter" data-level="4.4" data-path="module-4.html"><a href="module-4.html#gamma-glm"><i class="fa fa-check"></i><b>4.4</b> Gamma GLM</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="module-4.html"><a href="module-4.html#example-1"><i class="fa fa-check"></i><b>4.4.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.4.2" data-path="module-4.html"><a href="module-4.html#example-2"><i class="fa fa-check"></i><b>4.4.2</b> Example 2</a></li>
+<li class="chapter" data-level="4.4.3" data-path="module-4.html"><a href="module-4.html#example-3"><i class="fa fa-check"></i><b>4.4.3</b> Example 3</a></li>
+<li class="chapter" data-level="4.4.4" data-path="module-4.html"><a href="module-4.html#example-4"><i class="fa fa-check"></i><b>4.4.4</b> Example 4</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="module-4.html"><a href="module-4.html#running-gamma-glms"><i class="fa fa-check"></i><b>4.5</b> Running Gamma GLMs</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="module-5.html"><a href="module-5.html"><i class="fa fa-check"></i><b>5</b> Module 5</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="module-5.html"><a href="module-5.html#a.-ancovas-in-r"><i class="fa fa-check"></i><b>5.1</b> 5A. ANCOVAs in R</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="module-5.html"><a href="module-5.html#ancova-multiple-intercept-model"><i class="fa fa-check"></i><b>5.1.1</b> ANCOVA: multiple intercept model</a></li>
+<li class="chapter" data-level="5.1.2" data-path="module-5.html"><a href="module-5.html#ancova-multiple-intercept-and-slope-model"><i class="fa fa-check"></i><b>5.1.2</b> ANCOVA: multiple intercept AND slope model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="module-5.html"><a href="module-5.html#b.-block-designs"><i class="fa fa-check"></i><b>5.2</b> 5B. Block Designs</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="module-5.html"><a href="module-5.html#data-and-plotting"><i class="fa fa-check"></i><b>5.2.1</b> Data and Plotting</a></li>
+<li class="chapter" data-level="5.2.2" data-path="module-5.html"><a href="module-5.html#models"><i class="fa fa-check"></i><b>5.2.2</b> Models</a></li>
+<li class="chapter" data-level="5.2.3" data-path="module-5.html"><a href="module-5.html#blocks-as-random-effects"><i class="fa fa-check"></i><b>5.2.3</b> Blocks as Random Effects</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="module-6.html"><a href="module-6.html"><i class="fa fa-check"></i><b>6</b> Module 6</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="module-6.html"><a href="module-6.html#a.-poisson-glmms"><i class="fa fa-check"></i><b>6.1</b> 6A. Poisson GLMMs</a></li>
+<li class="chapter" data-level="6.2" data-path="module-6.html"><a href="module-6.html#improving-the-models-whats-next"><i class="fa fa-check"></i><b>6.2</b> Improving the models: What’s next?</a></li>
+<li class="chapter" data-level="6.3" data-path="module-6.html"><a href="module-6.html#b.-binomial-and-beta-glmms"><i class="fa fa-check"></i><b>6.3</b> 6B. Binomial and Beta GLMMs</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="module-6.html"><a href="module-6.html#binomial"><i class="fa fa-check"></i><b>6.3.1</b> Binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="module-6.html"><a href="module-6.html#c.-beta-distributions"><i class="fa fa-check"></i><b>6.4</b> 6C. Beta Distributions</a></li>
+<li class="chapter" data-level="6.5" data-path="module-6.html"><a href="module-6.html#d.-problem-set"><i class="fa fa-check"></i><b>6.5</b> 6D. Problem set</a></li>
+<li class="chapter" data-level="6.6" data-path="module-6.html"><a href="module-6.html#e.x-zero-inflated-models"><i class="fa fa-check"></i><b>6.6</b> 6E.x Zero-Inflated Models</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistics in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-4" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Module 4<a href="module-4.html#module-4" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="a.-generalized-models" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> 4A. Generalized Models<a href="module-4.html#a.-generalized-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="module-4.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+## ✔ tibble  3.1.8     ✔ dplyr   1.0.9
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.0.1     ✔ forcats 0.5.1</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="module-4.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb9-2"><a href="module-4.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     some</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="module-4.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agridat)</span></code></pre></div>
+<pre><code>## Warning: package &#39;agridat&#39; was built under R version 4.1.2</code></pre>
+<div id="example-conducting-a-one-way-anova-with-non-normal-data" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Example: Conducting a one-way ANOVA with non-normal data<a href="module-4.html#example-conducting-a-one-way-anova-with-non-normal-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s load up the InsectSprays data</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="module-4.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;InsectSprays&quot;</span>)<span class="co"># available from base R  </span></span></code></pre></div>
+<p>Now we need to filter the data to just 4 treatments:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="module-4.html#cb17-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> InsectSprays <span class="sc">%&gt;%</span> <span class="fu">filter</span>(spray<span class="sc">==</span><span class="st">&#39;A&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;B&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;C&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;F&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="module-4.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span></code></pre></div>
+<p>Let’s plot out data:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="module-4.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x=</span>spray,<span class="at">y=</span>count)) <span class="sc">+</span> </span>
+<span id="cb18-2"><a href="module-4.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="module-4.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>,<span class="at">width=</span>.<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="module-4.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="module-4.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face=</span> <span class="st">&#39;bold&#39;</span>, <span class="at">size =</span> <span class="dv">15</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="module-4.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(d<span class="sc">$</span>count)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Now let’s construct a linear model to examine the effect of the different sprays on insect counts:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="module-4.html#cb20-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(count<span class="sc">~</span>spray, <span class="at">data=</span>d)</span>
+<span id="cb20-2"><a href="module-4.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(lm1, <span class="at">type=</span><span class="dv">2</span>)  <span class="do">## car::Anova will print out an ANOVA table</span></span></code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: count
+##            Sum Sq Df F value    Pr(&gt;F)    
+## spray     1648.73  3  26.478 6.091e-10 ***
+## Residuals  913.25 44                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Let’s check the residuals of the model:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="module-4.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">resid</span>(lm1)) <span class="co">#&#39; residuals should be normally distributed, even for glm</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="module-4.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(lm1)<span class="sc">~</span><span class="fu">fitted</span>(lm1))   <span class="do">## residuals should be evenly dispersed around 0 across the range of x&#39;s</span></span>
+<span id="cb23-2"><a href="module-4.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)     <span class="co"># funnel shapes or curvature is bad</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="module-4.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(<span class="fu">resid</span>(lm1))  <span class="do">## residuals should line up pretty closely to the blue line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre><code>## [1] 45 46</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="module-4.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(lm1) <span class="sc">~</span> d<span class="sc">$</span>spray)  <span class="do">## variances should be homogeneous for each group</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Let’s use emmeans:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="module-4.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm1, <span class="sc">~</span>spray)</span></code></pre></div>
+<pre><code>##  spray emmean   SE df lower.CL upper.CL
+##  A      14.50 1.32 44   11.849    17.15
+##  B      15.33 1.32 44   12.683    17.98
+##  C       2.08 1.32 44   -0.567     4.73
+##  F      16.67 1.32 44   14.016    19.32
+## 
+## Confidence level used: 0.95</code></pre>
+<p>Note all the SE are the same and CL is off.</p>
+</div>
+<div id="log-linear-model" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Log-linear model<a href="module-4.html#log-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now let’s use a log-linear model to examine the effect of the different sprays on insect counts.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="module-4.html#cb29-1" aria-hidden="true" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(count<span class="sc">+</span><span class="dv">1</span>)<span class="sc">~</span>spray, <span class="at">data=</span>d)</span>
+<span id="cb29-2"><a href="module-4.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(lm2, <span class="at">type=</span><span class="dv">2</span>)  <span class="do">## car::Anova will print out an ANOVA table testing</span></span></code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: log(count + 1)
+##            Sum Sq Df F value    Pr(&gt;F)    
+## spray     29.3651  3  56.682 3.701e-15 ***
+## Residuals  7.5984 44                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Let’s check residuals:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="module-4.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">resid</span>(lm2)) <span class="do">## residuals should be normally distributed, even for glm</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="module-4.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(lm2)<span class="sc">~</span><span class="fu">fitted</span>(lm2)) <span class="sc">+</span>  <span class="do">## residuals should be evenly dispersed around 0 across the range of x&#39;s</span></span>
+<span id="cb32-2"><a href="module-4.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)                               <span class="co"># funnel shapes or curvature is bad</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<pre><code>## integer(0)</code></pre>
+<p>qqPlot and boxplot next:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="module-4.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(<span class="fu">resid</span>(lm2))  <span class="do">## residuals should line up pretty closely to the blue line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre><code>## [1] 27 25</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="module-4.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(lm2) <span class="sc">~</span> d<span class="sc">$</span>spray)  <span class="do">## variances should be homogeneous for each group</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p>Let’s use emmeans again:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="module-4.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm2, <span class="sc">~</span>spray) <span class="do">## note that now all means are back-transformed</span></span></code></pre></div>
+<pre><code>##  spray emmean   SE df lower.CL upper.CL
+##  A      2.697 0.12 44    2.455     2.94
+##  B      2.757 0.12 44    2.515     3.00
+##  C      0.953 0.12 44    0.711     1.19
+##  F      2.816 0.12 44    2.574     3.06
+## 
+## Results are given on the log(mu + 1) (not the response) scale. 
+## Confidence level used: 0.95</code></pre>
+<p>To calculate back-transformed emmeans we can add additional arguments:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="module-4.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm2, <span class="sc">~</span>spray, <span class="at">type=</span><span class="st">&#39;response&#39;</span>) <span class="do">## note that now all means are back-transformed</span></span></code></pre></div>
+<pre><code>##  spray response    SE df lower.CL upper.CL
+##  A        13.83 1.779 44    10.65     17.9
+##  B        14.75 1.889 44    11.36     19.1
+##  C         1.59 0.311 44     1.04      2.3
+##  F        15.70 2.004 44    12.12     20.3
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log(mu + 1) scale</code></pre>
+</div>
+<div id="generalized-linear-models" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Generalized linear models<a href="module-4.html#generalized-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now let’s use GLMs to examine the effect of the different sprays:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="module-4.html#cb41-1" aria-hidden="true" tabindex="-1"></a>glm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(count<span class="sc">~</span>spray, <span class="at">data=</span>d, <span class="at">family=</span><span class="st">&#39;poisson&#39;</span>) </span></code></pre></div>
+<p>glm() is a general function that conducts a generalized linear model
+and we must specify the ‘family’ (aka error distribution). The default is the ‘gaussian’ distribution (normal). All the model “calculations” are saved in an object we called ‘glm1’.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="module-4.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(glm1, <span class="at">type=</span><span class="dv">2</span>)  <span class="do">## car::Anova will print out an ANOVA table testing </span></span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II tests)
+## 
+## Response: count
+##       LR Chisq Df Pr(&gt;Chisq)    
+## spray   185.83  3  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>For the ANOVA above, the null hypothesis that all group means are equal. The argument, type = 2, provides margin tests, which is usually better than the default Type I, especially for more complicated models. For GLMs, Anova returns a likelihood ratio test with a chi-sq value</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="module-4.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm1)   <span class="do">## summary() will provide the model coefficients (ie. the &quot;guts&quot; of the model)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = count ~ spray, family = &quot;poisson&quot;, data = d)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.3852  -0.9345  -0.1482   0.7048   2.6709  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  2.67415    0.07581  35.274   &lt;2e-16 ***
+## sprayB       0.05588    0.10574   0.528    0.597    
+## sprayC      -1.94018    0.21389  -9.071   &lt;2e-16 ***
+## sprayF       0.13926    0.10367   1.343    0.179    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 262.154  on 47  degrees of freedom
+## Residual deviance:  76.323  on 44  degrees of freedom
+## AIC: 273.93
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>The coefficients allow you rebuild the means from the linear model. Rebuilding the model from the coefficients is not super helpful and the p-values aren’t very meaningful. Residual deviance should be about equal to the degrees of freedom. More than twice as high is problematic.</p>
+<p>Now let’s check assumptions of model by examining residuals:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="module-4.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">resid</span>(glm1)) <span class="do">## residuals should be normally distributed, but don&#39;t need to be for GLMs</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="module-4.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(glm1)<span class="sc">~</span><span class="fu">fitted</span>(glm1))  <span class="do">## residuals should be evenly dispersed around 0 across the range of x&#39;s</span></span>
+<span id="cb47-2"><a href="module-4.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)                               <span class="co"># funnel shapes or curvature is bad</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="module-4.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(<span class="fu">resid</span>(glm1))  <span class="do">## calls from car package, residuals should line up pretty closely to the blue line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre><code>## [1] 27 23</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="module-4.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># points that drift from line might be outliers</span></span>
+<span id="cb50-2"><a href="module-4.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(glm1) <span class="sc">~</span> d<span class="sc">$</span>spray)  <span class="do">## variances should be homogeneous for each group</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<p>Diagnosing more complex GLMs can be very difficult. Residuals are often NOT NORMALLY DISTRIBUTED. We will return to this later…</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="module-4.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(glm1, <span class="sc">~</span>spray) <span class="do">## emmeans::emmmeans will rebuild the model for you</span></span></code></pre></div>
+<pre><code>##  spray emmean     SE  df asymp.LCL asymp.UCL
+##  A      2.674 0.0758 Inf     2.526      2.82
+##  B      2.730 0.0737 Inf     2.586      2.87
+##  C      0.734 0.2000 Inf     0.342      1.13
+##  F      2.813 0.0707 Inf     2.675      2.95
+## 
+## Results are given on the log (not the response) scale. 
+## Confidence level used: 0.95</code></pre>
+<p>The emmeans code above will print off the means, SE, and confidence intervals for each treatment group. Note, the coefficients are on the log-scale (look at model).</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="module-4.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(glm1, pairwise<span class="sc">~</span>spray, <span class="at">type=</span><span class="st">&#39;response&#39;</span>)  <span class="do">## adding &#39;pairwise&#39; will conduct pairwise contrasts -- ie. compare each group mean to the others</span></span></code></pre></div>
+<pre><code>## $emmeans
+##  spray  rate    SE  df asymp.LCL asymp.UCL
+##  A     14.50 1.099 Inf     12.50     16.82
+##  B     15.33 1.130 Inf     13.27     17.72
+##  C      2.08 0.417 Inf      1.41      3.08
+##  F     16.67 1.179 Inf     14.51     19.14
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log scale 
+## 
+## $contrasts
+##  contrast ratio     SE  df null z.ratio p.value
+##  A / B    0.946 0.1000 Inf    1  -0.528  0.9522
+##  A / C    6.960 1.4886 Inf    1   9.071  &lt;.0001
+##  A / F    0.870 0.0902 Inf    1  -1.343  0.5352
+##  B / C    7.360 1.5688 Inf    1   9.364  &lt;.0001
+##  B / F    0.920 0.0940 Inf    1  -0.816  0.8468
+##  C / F    0.125 0.0265 Inf    1  -9.803  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates 
+## Tests are performed on the log scale</code></pre>
+<p>Adding the argument ‘pairwise’ will conduct pairwise contrasts – ie. compare each group mean to the others. This automatically adjusts p-values using the ‘tukey’ adjust. This can be changed using ‘adjust=XX’ within the emmeans function. The type=‘response’ will back-transform (ie. exponentiate) to the original scale</p>
+<p>Let’s compare residuals for normal, log-transformed, and poisson models:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="module-4.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb55-2"><a href="module-4.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(lm1) <span class="sc">~</span> d<span class="sc">$</span>spray) </span>
+<span id="cb55-3"><a href="module-4.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(lm2) <span class="sc">~</span> d<span class="sc">$</span>spray) </span>
+<span id="cb55-4"><a href="module-4.html#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(glm1) <span class="sc">~</span> d<span class="sc">$</span>spray) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="module-4.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## null device 
+##           1</code></pre>
+<p>Let’s also compare means for normal, log-transformed, and poisson models:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="module-4.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm1, <span class="sc">~</span>spray)</span></code></pre></div>
+<pre><code>##  spray emmean   SE df lower.CL upper.CL
+##  A      14.50 1.32 44   11.849    17.15
+##  B      15.33 1.32 44   12.683    17.98
+##  C       2.08 1.32 44   -0.567     4.73
+##  F      16.67 1.32 44   14.016    19.32
+## 
+## Confidence level used: 0.95</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="module-4.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm2, <span class="sc">~</span>spray, <span class="at">type=</span><span class="st">&#39;response&#39;</span>)</span></code></pre></div>
+<pre><code>##  spray response    SE df lower.CL upper.CL
+##  A        13.83 1.779 44    10.65     17.9
+##  B        14.75 1.889 44    11.36     19.1
+##  C         1.59 0.311 44     1.04      2.3
+##  F        15.70 2.004 44    12.12     20.3
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log(mu + 1) scale</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="module-4.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(glm1, <span class="sc">~</span>spray, <span class="at">type=</span><span class="st">&#39;response&#39;</span>)</span></code></pre></div>
+<pre><code>##  spray  rate    SE  df asymp.LCL asymp.UCL
+##  A     14.50 1.099 Inf     12.50     16.82
+##  B     15.33 1.130 Inf     13.27     17.72
+##  C      2.08 0.417 Inf      1.41      3.08
+##  F     16.67 1.179 Inf     14.51     19.14
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log scale</code></pre>
+</div>
+</div>
+<div id="b.-overdispersion" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 4B. Overdispersion<a href="module-4.html#b.-overdispersion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this section we will go over how to deal with overdispersion.</p>
+<p>Let’s load the necessary libraries:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="module-4.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb64-2"><a href="module-4.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb64-3"><a href="module-4.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb64-4"><a href="module-4.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agridat)</span></code></pre></div>
+<p>Load in and read about the beall.webworms dataset. The variables of interest are the y-count of webworms, spray-spray treatment, and lead-lead treatment. Don’t worry about the block or other variables for now.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="module-4.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;beall.webworms&quot;</span>)</span>
+<span id="cb65-2"><a href="module-4.html#cb65-2" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> beall.webworms</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="module-4.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d1)</span></code></pre></div>
+<pre><code>##   row col y block trt spray lead
+## 1   1   1 1    B1  T1     N    N
+## 2   2   1 0    B1  T1     N    N
+## 3   3   1 1    B1  T1     N    N
+## 4   4   1 3    B1  T1     N    N
+## 5   5   1 6    B1  T1     N    N
+## 6   6   1 0    B2  T1     N    N</code></pre>
+<p>Let’s examine and plot the data:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="module-4.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d1, <span class="fu">aes</span>(<span class="at">x=</span>spray, <span class="at">y=</span>y, <span class="at">fill=</span>lead)) <span class="sc">+</span> </span>
+<span id="cb68-2"><a href="module-4.html#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">scale=</span><span class="st">&quot;width&quot;</span>, <span class="at">adjust=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb68-3"><a href="module-4.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitterdodge</span>(<span class="at">jitter.width=</span>.<span class="dv">5</span>,</span>
+<span id="cb68-4"><a href="module-4.html#cb68-4" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">jitter.height=</span>.<span class="dv">1</span>,</span>
+<span id="cb68-5"><a href="module-4.html#cb68-5" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">dodge.width =</span> <span class="dv">1</span>),</span>
+<span id="cb68-6"><a href="module-4.html#cb68-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha=</span>.<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb68-7"><a href="module-4.html#cb68-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Let’s now run a model with the interaction of spray and lead.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="module-4.html#cb69-1" aria-hidden="true" tabindex="-1"></a>r3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> spray <span class="sc">*</span> lead, <span class="at">data=</span>d1, <span class="at">family=</span><span class="st">&quot;poisson&quot;</span>)</span></code></pre></div>
+<p>Examine the model summary:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="module-4.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(r3)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = y ~ spray * lead, family = &quot;poisson&quot;, data = d1)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.6733  -1.0046  -0.9081   0.6141   4.2771  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   0.33647    0.04688   7.177 7.12e-13 ***
+## sprayY       -1.02043    0.09108 -11.204  &lt; 2e-16 ***
+## leadY        -0.49628    0.07621  -6.512 7.41e-11 ***
+## sprayY:leadY  0.29425    0.13917   2.114   0.0345 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 1955.9  on 1299  degrees of freedom
+## Residual deviance: 1720.4  on 1296  degrees of freedom
+## AIC: 3125.5
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="module-4.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(r3)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II tests)
+## 
+## Response: y
+##            LR Chisq Df Pr(&gt;Chisq)    
+## spray       188.707  1  &lt; 2.2e-16 ***
+## lead         42.294  1  7.853e-11 ***
+## spray:lead    4.452  1    0.03485 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="module-4.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(r3, <span class="sc">~</span>spray<span class="sc">:</span>lead, <span class="at">type=</span><span class="st">&#39;response&#39;</span>) </span></code></pre></div>
+<pre><code>##  spray lead  rate     SE  df asymp.LCL asymp.UCL
+##  N     N    1.400 0.0656 Inf     1.277     1.535
+##  Y     N    0.505 0.0394 Inf     0.433     0.588
+##  N     Y    0.852 0.0512 Inf     0.758     0.959
+##  Y     Y    0.412 0.0356 Inf     0.348     0.488
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log scale</code></pre>
+<p>We need to load library(performance) to test for overdispersion:</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="module-4.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span></code></pre></div>
+<pre><code>## Warning: package &#39;performance&#39; was built under R version 4.1.2</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="module-4.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_overdispersion</span>(r3) <span class="co"># overdispersion ratio calculator from RVAideMemoire</span></span></code></pre></div>
+<pre><code>## # Overdispersion test
+## 
+##        dispersion ratio =    1.355
+##   Pearson&#39;s Chi-Squared = 1755.717
+##                 p-value =  &lt; 0.001</code></pre>
+<pre><code>## Overdispersion detected.</code></pre>
+<p>Now let’s load the glmmTMB package to implement negative binomial distribution.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="module-4.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmmTMB)</span></code></pre></div>
+<pre><code>## Warning in checkMatrixPackageVersion(): Package version inconsistency detected.
+## TMB was built with Matrix version 1.3.3
+## Current Matrix version is 1.3.4
+## Please re-install &#39;TMB&#39; from source using install.packages(&#39;TMB&#39;, type = &#39;source&#39;) or ask CRAN for a binary version of &#39;TMB&#39; matching CRAN&#39;s &#39;Matrix&#39; package</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="module-4.html#cb83-1" aria-hidden="true" tabindex="-1"></a>r4 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(y <span class="sc">~</span> spray <span class="sc">*</span> lead, <span class="at">data=</span>d1, <span class="at">family=</span><span class="st">&quot;nbinom2&quot;</span>)</span>
+<span id="cb83-2"><a href="module-4.html#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(r4)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: y
+##               Chisq Df Pr(&gt;Chisq)    
+## spray      125.5047  1  &lt; 2.2e-16 ***
+## lead        26.8005  1  2.256e-07 ***
+## spray:lead   3.3942  1    0.06542 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="module-4.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(r4, <span class="sc">~</span>spray<span class="sc">:</span>lead, <span class="at">type=</span><span class="st">&#39;response&#39;</span>) </span></code></pre></div>
+<pre><code>##  spray lead response     SE   df lower.CL upper.CL
+##  N     N       1.400 0.0855 1295    1.242    1.578
+##  Y     N       0.505 0.0441 1295    0.425    0.599
+##  N     Y       0.852 0.0611 1295    0.740    0.981
+##  Y     Y       0.412 0.0391 1295    0.342    0.497
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log scale</code></pre>
+<p>Let’s use the DHARMa package to simulate residuals for poisson and negative binomial models.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="module-4.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DHARMa)</span></code></pre></div>
+<pre><code>## This is DHARMa 0.4.3. For overview type &#39;?DHARMa&#39;. For recent changes, type news(package = &#39;DHARMa&#39;) Note: Syntax of plotResiduals has changed in 0.3.0, see ?plotResiduals for details</code></pre>
+<p>We can interpret the simulated residuals very similarly to the raw residuals we have previously examined. The residuals should line up along the line in the QQ plot and there should be (roughly) equal scatter in the residuals among the groups</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="module-4.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(r3)) <span class="do">## plot simulated residuals</span></span></code></pre></div>
+<pre><code>## DHARMa:testOutliers with type = binomial may have inflated Type I error rates for integer-valued distributions. To get a more exact result, it is recommended to re-run testOutliers with type = &#39;bootstrap&#39;. See ?testOutliers for details</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>Histograms of the simulated residuals will be different than before. Here the simulated residuals should be flat. Its ok if the bars bump up and down, but they should be on average flat across the graph.The bars shouldn’t be peaked (eg. “normally” distributed) or U-shaped or increasing/decreasing.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="module-4.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">simulateResiduals</span>(r3)) <span class="do">## histogram should be flat</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>Now let’s look at residuals for negative binomial model:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="module-4.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(r4)) <span class="do">## plot simulated residuals</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="module-4.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">simulateResiduals</span>(r4)) <span class="do">## histogram should be flat</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-2.png" width="672" /></p>
+</div>
+<div id="c.-binomial-glm" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 4C. Binomial GLM<a href="module-4.html#c.-binomial-glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this section we will run a GLM with a binomial error distribution. We load the following packages:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="module-4.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb94-2"><a href="module-4.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb94-3"><a href="module-4.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb94-4"><a href="module-4.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agridat)</span>
+<span id="cb94-5"><a href="module-4.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DHARMa)</span></code></pre></div>
+<p>We will use the Titanic survival dataset for the binomial GLM.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="module-4.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="do">## LOAD TITANIC SURVIVAL DATASET</span></span>
+<span id="cb95-2"><a href="module-4.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;TitanicSurvival&quot;</span>)</span>
+<span id="cb95-3"><a href="module-4.html#cb95-3" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> TitanicSurvival <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age<span class="sc">&gt;</span><span class="dv">17</span>) <span class="co"># filter out children</span></span>
+<span id="cb95-4"><a href="module-4.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(t1)</span></code></pre></div>
+<pre><code>##                                 survived    sex age passengerClass
+## Allen, Miss. Elisabeth Walton        yes female  29            1st
+## Allison, Mr. Hudson Joshua Crei       no   male  30            1st
+## Allison, Mrs. Hudson J C (Bessi       no female  25            1st
+## Anderson, Mr. Harry                  yes   male  48            1st
+## Andrews, Miss. Kornelia Theodos      yes female  63            1st
+## Andrews, Mr. Thomas Jr                no   male  39            1st</code></pre>
+<p>Let’s quickly plot the data:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="module-4.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(t1, <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>survived, <span class="at">color=</span>sex)) <span class="sc">+</span></span>
+<span id="cb97-2"><a href="module-4.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span>.<span class="dv">2</span>, <span class="at">width=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>Now we can construct a GLM to estimate survival as a function of sex and passengerClass while include Age as co-variate.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="module-4.html#cb98-1" aria-hidden="true" tabindex="-1"></a>tglm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survived <span class="sc">~</span> sex <span class="sc">*</span> passengerClass <span class="sc">+</span> age, <span class="at">data=</span>t1, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<p>Let’s look at the summary of the model:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="module-4.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="do">## print off anova table</span></span>
+<span id="cb99-2"><a href="module-4.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(tglm1)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II tests)
+## 
+## Response: survived
+##                    LR Chisq Df Pr(&gt;Chisq)    
+## sex                 270.225  1  &lt; 2.2e-16 ***
+## passengerClass       85.841  2  &lt; 2.2e-16 ***
+## age                   8.419  1   0.003714 ** 
+## sex:passengerClass   48.354  2  3.163e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="module-4.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="do">## print off summary</span></span>
+<span id="cb101-2"><a href="module-4.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tglm1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = survived ~ sex * passengerClass + age, family = binomial(link = &quot;logit&quot;), 
+##     data = t1)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.7672  -0.6349  -0.4503   0.4438   2.5268  
+## 
+## Coefficients:
+##                            Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                4.440409   0.637328   6.967 3.23e-12 ***
+## sexmale                   -4.105505   0.540235  -7.599 2.97e-14 ***
+## passengerClass2nd         -1.709631   0.609577  -2.805  0.00504 ** 
+## passengerClass3rd         -3.957654   0.562147  -7.040 1.92e-12 ***
+## age                       -0.025352   0.008945  -2.834  0.00459 ** 
+## sexmale:passengerClass2nd -0.203867   0.698880  -0.292  0.77051    
+## sexmale:passengerClass3rd  2.655924   0.597510   4.445 8.79e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1191.35  on 891  degrees of freedom
+## Residual deviance:  752.38  on 885  degrees of freedom
+## AIC: 766.38
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Now we can check residuals:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="module-4.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">resid</span>(tglm1)) <span class="do">## residuals should be normally distributed, even for glm</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="module-4.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(tglm1)<span class="sc">~</span><span class="fu">fitted</span>(tglm1)) <span class="sc">+</span>  <span class="do">## residuals should be evenly dispersed around 0 across the range of x&#39;s</span></span>
+<span id="cb104-2"><a href="module-4.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)                               <span class="co"># funnel shapes or curvature is bad</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-42-2.png" width="672" /></p>
+<pre><code>## integer(0)</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="module-4.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(<span class="fu">resid</span>(tglm1))  <span class="do">## residuals should line up pretty closely to the blue line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<pre><code>## Allison, Mrs. Hudson J C (Bessi              Harris, Mr. George 
+##                               3                             363</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="module-4.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(tglm1) <span class="sc">~</span> t1<span class="sc">$</span>passengerClass)  <span class="do">## variances should be homogeneous for each group</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-43-2.png" width="672" /></p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="module-4.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="do">## simulate residuals</span></span>
+<span id="cb109-2"><a href="module-4.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(tglm1)) <span class="do">## plot simulated residuals</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="module-4.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">simulateResiduals</span>(tglm1)) <span class="do">## histogram should be flat</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-44-2.png" width="672" /></p>
+<p>To make sense of the model output let’s use the emmeans package:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="module-4.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(tglm1, pairwise <span class="sc">~</span> sex<span class="sc">:</span>passengerClass)</span></code></pre></div>
+<pre><code>## $emmeans
+##  sex    passengerClass emmean    SE  df asymp.LCL asymp.UCL
+##  female 1st             3.592 0.516 Inf     2.580    4.6034
+##  male   1st            -0.514 0.192 Inf    -0.890   -0.1371
+##  female 2nd             1.882 0.325 Inf     1.246    2.5183
+##  male   2nd            -2.427 0.303 Inf    -3.022   -1.8324
+##  female 3rd            -0.366 0.203 Inf    -0.764    0.0322
+##  male   3rd            -1.815 0.170 Inf    -2.149   -1.4814
+## 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast                estimate    SE  df z.ratio p.value
+##  female 1st - male 1st      4.106 0.540 Inf   7.599  &lt;.0001
+##  female 1st - female 2nd    1.710 0.610 Inf   2.805  0.0567
+##  female 1st - male 2nd      6.019 0.602 Inf   9.997  &lt;.0001
+##  female 1st - female 3rd    3.958 0.562 Inf   7.040  &lt;.0001
+##  female 1st - male 3rd      5.407 0.551 Inf   9.810  &lt;.0001
+##  male 1st - female 2nd     -2.396 0.377 Inf  -6.354  &lt;.0001
+##  male 1st - male 2nd        1.913 0.364 Inf   5.262  &lt;.0001
+##  male 1st - female 3rd     -0.148 0.291 Inf  -0.507  0.9959
+##  male 1st - male 3rd        1.302 0.270 Inf   4.826  &lt;.0001
+##  female 2nd - male 2nd      4.309 0.444 Inf   9.700  &lt;.0001
+##  female 2nd - female 3rd    2.248 0.383 Inf   5.872  &lt;.0001
+##  female 2nd - male 3rd      3.698 0.367 Inf  10.088  &lt;.0001
+##  male 2nd - female 3rd     -2.061 0.362 Inf  -5.699  &lt;.0001
+##  male 2nd - male 3rd       -0.612 0.344 Inf  -1.776  0.4812
+##  female 3rd - male 3rd      1.450 0.255 Inf   5.678  &lt;.0001
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 6 estimates</code></pre>
+<p>We can obtain back-transformed means:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="module-4.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(tglm1, pairwise <span class="sc">~</span> sex<span class="sc">:</span>passengerClass, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)      <span class="do">## type= does contrasts before back-transforming (more appropriate!)</span></span></code></pre></div>
+<pre><code>## $emmeans
+##  sex    passengerClass   prob     SE  df asymp.LCL asymp.UCL
+##  female 1st            0.9732 0.0135 Inf    0.9296     0.990
+##  male   1st            0.3743 0.0450 Inf    0.2911     0.466
+##  female 2nd            0.8679 0.0372 Inf    0.7766     0.925
+##  male   2nd            0.0811 0.0226 Inf    0.0465     0.138
+##  female 3rd            0.4096 0.0491 Inf    0.3178     0.508
+##  male   3rd            0.1400 0.0205 Inf    0.1044     0.185
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the logit scale 
+## 
+## $contrasts
+##  contrast                odds.ratio       SE  df null z.ratio p.value
+##  female 1st / male 1st      60.6734  32.7779 Inf    1   7.599  &lt;.0001
+##  female 1st / female 2nd     5.5269   3.3691 Inf    1   2.805  0.0567
+##  female 1st / male 2nd     411.1685 247.5444 Inf    1   9.997  &lt;.0001
+##  female 1st / female 3rd    52.3344  29.4197 Inf    1   7.040  &lt;.0001
+##  female 1st / male 3rd     223.0141 122.9249 Inf    1   9.810  &lt;.0001
+##  male 1st / female 2nd       0.0911   0.0343 Inf    1  -6.354  &lt;.0001
+##  male 1st / male 2nd         6.7768   2.4645 Inf    1   5.262  &lt;.0001
+##  male 1st / female 3rd       0.8626   0.2514 Inf    1  -0.507  0.9959
+##  male 1st / male 3rd         3.6756   0.9915 Inf    1   4.826  &lt;.0001
+##  female 2nd / male 2nd      74.3937  33.0509 Inf    1   9.700  &lt;.0001
+##  female 2nd / female 3rd     9.4690   3.6250 Inf    1   5.872  &lt;.0001
+##  female 2nd / male 3rd      40.3505  14.7906 Inf    1  10.088  &lt;.0001
+##  male 2nd / female 3rd       0.1273   0.0460 Inf    1  -5.699  &lt;.0001
+##  male 2nd / male 3rd         0.5424   0.1868 Inf    1  -1.776  0.4812
+##  female 3rd / male 3rd       4.2613   1.0878 Inf    1   5.678  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 6 estimates 
+## Tests are performed on the log odds ratio scale</code></pre>
+<p>In order to plot we need to create new variable that is 0 or 1.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="module-4.html#cb115-1" aria-hidden="true" tabindex="-1"></a>t1<span class="sc">$</span>surv <span class="ot">&lt;-</span> <span class="fu">if_else</span>(t1<span class="sc">$</span>survived<span class="sc">==</span><span class="st">&#39;yes&#39;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span></code></pre></div>
+<p>Now we can make a plot with regression lines:</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="module-4.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(t1, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>surv, <span class="at">color=</span>sex)) <span class="sc">+</span> </span>
+<span id="cb116-2"><a href="module-4.html#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span>.<span class="dv">1</span>, <span class="at">width=</span><span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb116-3"><a href="module-4.html#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb116-4"><a href="module-4.html#cb116-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">method.args=</span><span class="fu">list</span>(<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>), </span>
+<span id="cb116-5"><a href="module-4.html#cb116-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se=</span>F, <span class="at">lwd=</span><span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb116-6"><a href="module-4.html#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>passengerClass) <span class="sc">+</span></span>
+<span id="cb116-7"><a href="module-4.html#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">20</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p>We can improve the aesthetics of the plot:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="module-4.html#cb117-1" aria-hidden="true" tabindex="-1"></a>tm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tglm1, <span class="sc">~</span> sex<span class="sc">:</span>passengerClass, <span class="at">type=</span><span class="st">&quot;response&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb117-2"><a href="module-4.html#cb117-2" aria-hidden="true" tabindex="-1"></a>cbPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>, <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)</span>
+<span id="cb117-3"><a href="module-4.html#cb117-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-4"><a href="module-4.html#cb117-4" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb117-5"><a href="module-4.html#cb117-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span>t1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">&#39;female&#39;</span>),</span>
+<span id="cb117-6"><a href="module-4.html#cb117-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>surv<span class="fl">+.01</span>),</span>
+<span id="cb117-7"><a href="module-4.html#cb117-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">25</span>, <span class="at">size=</span><span class="dv">1</span>, </span>
+<span id="cb117-8"><a href="module-4.html#cb117-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span>.<span class="dv">1</span>, <span class="at">color=</span><span class="st">&quot;#E69F00&quot;</span>) <span class="sc">+</span></span>
+<span id="cb117-9"><a href="module-4.html#cb117-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span>t1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">&#39;male&#39;</span>), </span>
+<span id="cb117-10"><a href="module-4.html#cb117-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>surv<span class="fl">-.01</span>), </span>
+<span id="cb117-11"><a href="module-4.html#cb117-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">25</span>, <span class="at">size=</span><span class="dv">1</span>, </span>
+<span id="cb117-12"><a href="module-4.html#cb117-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span>.<span class="dv">1</span>, <span class="at">color=</span><span class="st">&quot;#56B4E9&quot;</span>) <span class="sc">+</span></span>
+<span id="cb117-13"><a href="module-4.html#cb117-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>tm,</span>
+<span id="cb117-14"><a href="module-4.html#cb117-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x=</span>passengerClass,</span>
+<span id="cb117-15"><a href="module-4.html#cb117-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y=</span>prob, <span class="at">ymin=</span>(prob<span class="sc">-</span>SE), </span>
+<span id="cb117-16"><a href="module-4.html#cb117-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax=</span>(prob<span class="sc">+</span>SE), <span class="at">color=</span>sex), </span>
+<span id="cb117-17"><a href="module-4.html#cb117-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">width=</span>.<span class="dv">2</span>, <span class="at">lwd=</span><span class="fl">1.25</span>,</span>
+<span id="cb117-18"><a href="module-4.html#cb117-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb117-19"><a href="module-4.html#cb117-19" aria-hidden="true" tabindex="-1"></a>  <span class="do">## make bars thinner</span></span>
+<span id="cb117-20"><a href="module-4.html#cb117-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>tm , </span>
+<span id="cb117-21"><a href="module-4.html#cb117-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>prob, <span class="at">color=</span>sex), </span>
+<span id="cb117-22"><a href="module-4.html#cb117-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">5</span>, </span>
+<span id="cb117-23"><a href="module-4.html#cb117-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.5</span>)) <span class="sc">+</span> </span>
+<span id="cb117-24"><a href="module-4.html#cb117-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">&#39;survival&#39;</span>, <span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb117-25"><a href="module-4.html#cb117-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span>cbPalette) <span class="sc">+</span></span>
+<span id="cb117-26"><a href="module-4.html#cb117-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>(),                           </span>
+<span id="cb117-27"><a href="module-4.html#cb117-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb117-28"><a href="module-4.html#cb117-28" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">size=</span><span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb117-29"><a href="module-4.html#cb117-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.length=</span><span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>),  </span>
+<span id="cb117-30"><a href="module-4.html#cb117-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span>  <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>),</span>
+<span id="cb117-31"><a href="module-4.html#cb117-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>  <span class="do">## change axis tick marks to make them a little longer</span></span>
+<span id="cb117-32"><a href="module-4.html#cb117-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">#theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +</span></span>
+<span id="cb117-33"><a href="module-4.html#cb117-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>)) </span>
+<span id="cb117-34"><a href="module-4.html#cb117-34" aria-hidden="true" tabindex="-1"></a>plot1</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="module-4.html#cb118-1" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb118-2"><a href="module-4.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span>t1 ,</span>
+<span id="cb118-3"><a href="module-4.html#cb118-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>surv, </span>
+<span id="cb118-4"><a href="module-4.html#cb118-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">color=</span>passengerClass), </span>
+<span id="cb118-5"><a href="module-4.html#cb118-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span>.<span class="dv">01</span>, <span class="at">width=</span>.<span class="dv">35</span>, </span>
+<span id="cb118-6"><a href="module-4.html#cb118-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size=</span><span class="dv">1</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb118-7"><a href="module-4.html#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>tm ,</span>
+<span id="cb118-8"><a href="module-4.html#cb118-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x=</span>passengerClass,</span>
+<span id="cb118-9"><a href="module-4.html#cb118-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y=</span>prob, <span class="at">ymin=</span>(prob<span class="sc">-</span>SE),</span>
+<span id="cb118-10"><a href="module-4.html#cb118-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax=</span>(prob<span class="sc">+</span>SE), </span>
+<span id="cb118-11"><a href="module-4.html#cb118-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color=</span>passengerClass), </span>
+<span id="cb118-12"><a href="module-4.html#cb118-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">width=</span>.<span class="dv">2</span>, <span class="at">lwd=</span><span class="fl">1.25</span>) <span class="sc">+</span> <span class="do">## make bars thinner</span></span>
+<span id="cb118-13"><a href="module-4.html#cb118-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>tm , </span>
+<span id="cb118-14"><a href="module-4.html#cb118-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, </span>
+<span id="cb118-15"><a href="module-4.html#cb118-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>prob, <span class="at">color=</span>passengerClass), <span class="at">size=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb118-16"><a href="module-4.html#cb118-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sex) <span class="sc">+</span></span>
+<span id="cb118-17"><a href="module-4.html#cb118-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">&#39;survival&#39;</span>, <span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb118-18"><a href="module-4.html#cb118-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span>cbPalette) <span class="sc">+</span></span>
+<span id="cb118-19"><a href="module-4.html#cb118-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>(),                           </span>
+<span id="cb118-20"><a href="module-4.html#cb118-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">size=</span><span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb118-21"><a href="module-4.html#cb118-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.length=</span><span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>),  </span>
+<span id="cb118-22"><a href="module-4.html#cb118-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>),</span>
+<span id="cb118-23"><a href="module-4.html#cb118-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb118-24"><a href="module-4.html#cb118-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>)) </span>
+<span id="cb118-25"><a href="module-4.html#cb118-25" aria-hidden="true" tabindex="-1"></a>plot2</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+</div>
+<div id="gamma-glm" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Gamma GLM<a href="module-4.html#gamma-glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this section we will learn about implementing the Gamma distribution in R. This distribution is helpful in for modeling a variety of data but is most frequently applied to data that is right skewed but not necessarily count data. The next several examples will illustrate how to generate Gamma distributed data based on several parameters as well as how to implement Gamma GLMs.</p>
+<div id="example-1" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Example 1<a href="module-4.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here we generate a distribution:</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="module-4.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">15</span>)</span>
+<span id="cb119-2"><a href="module-4.html#cb119-2" aria-hidden="true" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">1000</span>, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> .<span class="dv">5</span>)</span>
+<span id="cb119-3"><a href="module-4.html#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(var1, <span class="at">main=</span><span class="st">&#39;mean=1, scale=0.5&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>Note that the mean of this distribution should be 1 because the mean is equal to product of the shape parameter and scale parameter. So, 2 multiplied by 0.5 should be 1.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="module-4.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">15</span>)</span>
+<span id="cb120-2"><a href="module-4.html#cb120-2" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;inverse&quot;</span>))</span>
+<span id="cb120-3"><a href="module-4.html#cb120-3" aria-hidden="true" tabindex="-1"></a>g1</span></code></pre></div>
+<pre><code>## Formula:          var1 ~ 1
+##       AIC       BIC    logLik  df.resid 
+## 1822.0994 1831.9149 -909.0497       998 
+## 
+## Number of obs: 1000
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.483 
+## 
+## Fixed Effects:
+## 
+## Conditional model:
+## (Intercept)  
+##      0.9657</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="module-4.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with inverse link function</span></span>
+<span id="cb122-2"><a href="module-4.html#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="fl">0.9711</span></span></code></pre></div>
+<pre><code>## [1] 1.02976</code></pre>
+<p>In the above example we run a Gamma GLM as an intercept only model. By running an intercept only model we assume no other predictors can predict the response variable. Therefore the output from this model would simply be the mean of the response, which should be ~1 (which it is after applying the right link function to the intercept).</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="module-4.html#cb124-1" aria-hidden="true" tabindex="-1"></a>g1a <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span>
+<span id="cb124-2"><a href="module-4.html#cb124-2" aria-hidden="true" tabindex="-1"></a>g1a</span></code></pre></div>
+<pre><code>## Formula:          var1 ~ 1
+##       AIC       BIC    logLik  df.resid 
+## 1822.0994 1831.9149 -909.0497       998 
+## 
+## Number of obs: 1000
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.483 
+## 
+## Fixed Effects:
+## 
+## Conditional model:
+## (Intercept)  
+##     0.03491</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="module-4.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with log link function</span></span>
+<span id="cb126-2"><a href="module-4.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fl">0.02937</span>)</span></code></pre></div>
+<pre><code>## [1] 1.029806</code></pre>
+<p>The same is shown above but in this case we use a log link and so to back transform the intercept we use exponentiation.</p>
+</div>
+<div id="example-2" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Example 2<a href="module-4.html#example-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In the example below we generate another Gamma distributed variable but we change the shape and scale parameter. But because the mean is based on the product of the two, the mean remains as 1.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="module-4.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">15</span>)</span>
+<span id="cb128-2"><a href="module-4.html#cb128-2" aria-hidden="true" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">1000</span>, <span class="at">shape =</span> <span class="dv">4</span>, <span class="at">scale =</span> .<span class="dv">25</span>)</span>
+<span id="cb128-3"><a href="module-4.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(var1, <span class="at">main=</span><span class="st">&#39;mean=1, scale=0.25&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="module-4.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean = a (shape) * b (rate)</span></span>
+<span id="cb129-2"><a href="module-4.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mean = 4 * .25 = 1.0</span></span>
+<span id="cb129-3"><a href="module-4.html#cb129-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-4"><a href="module-4.html#cb129-4" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;inverse&quot;</span>))</span>
+<span id="cb129-5"><a href="module-4.html#cb129-5" aria-hidden="true" tabindex="-1"></a>g1</span></code></pre></div>
+<pre><code>## Formula:          var1 ~ 1
+##       AIC       BIC    logLik  df.resid 
+## 1281.0616 1290.8771 -638.5308       998 
+## 
+## Number of obs: 1000
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.233 
+## 
+## Fixed Effects:
+## 
+## Conditional model:
+## (Intercept)  
+##      0.9711</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="module-4.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with inverse link function</span></span>
+<span id="cb131-2"><a href="module-4.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="fl">0.9711</span></span></code></pre></div>
+<pre><code>## [1] 1.02976</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="module-4.html#cb133-1" aria-hidden="true" tabindex="-1"></a>g1a <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span>
+<span id="cb133-2"><a href="module-4.html#cb133-2" aria-hidden="true" tabindex="-1"></a>g1a</span></code></pre></div>
+<pre><code>## Formula:          var1 ~ 1
+##       AIC       BIC    logLik  df.resid 
+## 1281.0616 1290.8771 -638.5308       998 
+## 
+## Number of obs: 1000
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.233 
+## 
+## Fixed Effects:
+## 
+## Conditional model:
+## (Intercept)  
+##     0.02937</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="module-4.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with log link function</span></span>
+<span id="cb135-2"><a href="module-4.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fl">0.02937</span>)</span></code></pre></div>
+<pre><code>## [1] 1.029806</code></pre>
+<p>We once again repeat the same exercise as example 1 and see that when the appropriate back transformation based on link functions are applied to the intercept, it results in the original mean.</p>
+</div>
+<div id="example-3" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Example 3<a href="module-4.html#example-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this example we change the mean of the distribution to 0.5 by changing the shape and scale parameters to 1 and 0.5 respectively. We then repeat the previous examples and run the inverse and log link Gamma GLMs and observe how the intercepts are backtransformed to approximate the previously set mean value.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="module-4.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">15</span>)</span>
+<span id="cb137-2"><a href="module-4.html#cb137-2" aria-hidden="true" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">1000</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">scale =</span> .<span class="dv">5</span>)</span>
+<span id="cb137-3"><a href="module-4.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(var1, <span class="at">main=</span><span class="st">&#39;mean=0.5, scale=0.5&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="module-4.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean = a (shape) * b (rate)</span></span>
+<span id="cb138-2"><a href="module-4.html#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mean = 1 * .5 = 0.5</span></span>
+<span id="cb138-3"><a href="module-4.html#cb138-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-4"><a href="module-4.html#cb138-4" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;inverse&quot;</span>))</span>
+<span id="cb138-5"><a href="module-4.html#cb138-5" aria-hidden="true" tabindex="-1"></a>g1</span></code></pre></div>
+<pre><code>## Formula:          var1 ~ 1
+##       AIC       BIC    logLik  df.resid 
+##  654.8480  664.6635 -325.4240       998 
+## 
+## Number of obs: 1000
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.968 
+## 
+## Fixed Effects:
+## 
+## Conditional model:
+## (Intercept)  
+##       1.963</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="module-4.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with inverse link function</span></span>
+<span id="cb140-2"><a href="module-4.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>g1<span class="sc">$</span>sdr<span class="sc">$</span>par.fixed[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##      beta 
+## 0.5095401</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="module-4.html#cb142-1" aria-hidden="true" tabindex="-1"></a>g1a <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span>
+<span id="cb142-2"><a href="module-4.html#cb142-2" aria-hidden="true" tabindex="-1"></a>g1a<span class="sc">$</span>sdr<span class="sc">$</span>par.fixed[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##       beta 
+## -0.6742484</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="module-4.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with log link function</span></span>
+<span id="cb144-2"><a href="module-4.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(g1a<span class="sc">$</span>sdr<span class="sc">$</span>par.fixed[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##      beta 
+## 0.5095393</code></pre>
+</div>
+<div id="example-4" class="section level3 hasAnchor" number="4.4.4">
+<h3><span class="header-section-number">4.4.4</span> Example 4<a href="module-4.html#example-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This example follows the previous examples but with the mean changed to 0.25.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="module-4.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">15</span>)</span>
+<span id="cb146-2"><a href="module-4.html#cb146-2" aria-hidden="true" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">1000</span>, <span class="at">shape =</span> .<span class="dv">5</span>, <span class="at">scale =</span> <span class="dv">1</span>)</span>
+<span id="cb146-3"><a href="module-4.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(var1, <span class="at">main=</span><span class="st">&#39;mean=0.25, scale=1&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="module-4.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean = a (shape) * b (rate)</span></span>
+<span id="cb147-2"><a href="module-4.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mean = .5 * 1 = 0.5</span></span>
+<span id="cb147-3"><a href="module-4.html#cb147-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-4"><a href="module-4.html#cb147-4" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;inverse&quot;</span>))</span>
+<span id="cb147-5"><a href="module-4.html#cb147-5" aria-hidden="true" tabindex="-1"></a>g1</span></code></pre></div>
+<pre><code>## Formula:          var1 ~ 1
+##       AIC       BIC    logLik  df.resid 
+## 202.40398 212.21949 -99.20199       998 
+## 
+## Number of obs: 1000
+## 
+## Dispersion estimate for Gamma family (sigma^2): 1.97 
+## 
+## Fixed Effects:
+## 
+## Conditional model:
+## (Intercept)  
+##       2.005</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="module-4.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with inverse link function</span></span>
+<span id="cb149-2"><a href="module-4.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>g1<span class="sc">$</span>sdr<span class="sc">$</span>par.fixed[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##      beta 
+## 0.4986803</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="module-4.html#cb151-1" aria-hidden="true" tabindex="-1"></a>g1a <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span>
+<span id="cb151-2"><a href="module-4.html#cb151-2" aria-hidden="true" tabindex="-1"></a>g1a</span></code></pre></div>
+<pre><code>## Formula:          var1 ~ 1
+##       AIC       BIC    logLik  df.resid 
+## 202.40398 212.21949 -99.20199       998 
+## 
+## Number of obs: 1000
+## 
+## Dispersion estimate for Gamma family (sigma^2): 1.97 
+## 
+## Fixed Effects:
+## 
+## Conditional model:
+## (Intercept)  
+##     -0.6958</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="module-4.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="do">## mean should be 1 with log link function</span></span>
+<span id="cb153-2"><a href="module-4.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(g1a<span class="sc">$</span>sdr<span class="sc">$</span>par.fixed[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##      beta 
+## 0.4986805</code></pre>
+</div>
+</div>
+<div id="running-gamma-glms" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Running Gamma GLMs<a href="module-4.html#running-gamma-glms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this section we simulate data for two groups:</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="module-4.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">25</span>)</span>
+<span id="cb155-2"><a href="module-4.html#cb155-2" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">100</span>, <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">scale =</span> .<span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb155-3"><a href="module-4.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(v1) <span class="ot">&lt;-</span> <span class="st">&quot;var&quot;</span></span>
+<span id="cb155-4"><a href="module-4.html#cb155-4" aria-hidden="true" tabindex="-1"></a>v1<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="st">&quot;one&quot;</span></span>
+<span id="cb155-5"><a href="module-4.html#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(v1)</span></code></pre></div>
+<pre><code>##         var group
+## 1 1.0881400   one
+## 2 2.4520815   one
+## 3 3.5583571   one
+## 4 0.9405657   one
+## 5 0.9225875   one
+## 6 1.4339098   one</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="module-4.html#cb157-1" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">100</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">scale =</span> .<span class="dv">2</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb157-2"><a href="module-4.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(v2) <span class="ot">&lt;-</span> <span class="st">&quot;var&quot;</span></span>
+<span id="cb157-3"><a href="module-4.html#cb157-3" aria-hidden="true" tabindex="-1"></a>v2<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="st">&quot;two&quot;</span></span>
+<span id="cb157-4"><a href="module-4.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(v2)</span></code></pre></div>
+<pre><code>##          var group
+## 1 0.15108136   two
+## 2 0.01761541   two
+## 3 0.47914554   two
+## 4 0.05403794   two
+## 5 0.13555345   two
+## 6 0.19157853   two</code></pre>
+<p>Then bind the two groups into one dataset:</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="module-4.html#cb159-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(v1,v2) <span class="co">#mean group 1 = 1.5, group 2 = 0.5</span></span>
+<span id="cb159-2"><a href="module-4.html#cb159-2" aria-hidden="true" tabindex="-1"></a>dat1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">obs=</span><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(obs) <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> group,<span class="at">values_from =</span> var) <span class="sc">%&gt;%</span> </span>
+<span id="cb159-3"><a href="module-4.html#cb159-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(one,two)</span></code></pre></div>
+<pre><code>## # A tibble: 100 × 2
+##      one     two
+##    &lt;dbl&gt;   &lt;dbl&gt;
+##  1 1.09  0.151  
+##  2 2.45  0.0176 
+##  3 3.56  0.479  
+##  4 0.941 0.0540 
+##  5 0.923 0.136  
+##  6 1.43  0.192  
+##  7 0.559 0.185  
+##  8 1.20  0.0195 
+##  9 1.15  0.0725 
+## 10 0.854 0.00261
+## # … with 90 more rows</code></pre>
+<p>We then check the data distributions:</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="module-4.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dat1<span class="sc">$</span>var)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="module-4.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat1, <span class="fu">aes</span>(<span class="at">x=</span>var)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">8</span>, <span class="at">fill=</span><span class="st">&quot;grey&quot;</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb162-2"><a href="module-4.html#cb162-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p>Then we construct several different models and use AIC to compare models:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="module-4.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### construct model w/ normal distribution</span></span>
+<span id="cb163-2"><a href="module-4.html#cb163-2" aria-hidden="true" tabindex="-1"></a>mod0 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var <span class="sc">~</span> group, <span class="at">data=</span>dat1)</span>
+<span id="cb163-3"><a href="module-4.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(mod0))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="module-4.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod0)</span></code></pre></div>
+<pre><code>##  Family: gaussian  ( identity )
+## Formula:          var ~ group
+## Data: dat1
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    408.0    417.9   -201.0    402.0      197 
+## 
+## 
+## Dispersion estimate for gaussian family (sigma^2): 0.437 
+## 
+## Conditional model:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  1.49247    0.06610   22.58   &lt;2e-16 ***
+## grouptwo    -1.28086    0.09349  -13.70   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="module-4.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod0, <span class="sc">~</span>group, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##  group emmean     SE  df lower.CL upper.CL
+##  one    1.492 0.0661 197   1.3621    1.623
+##  two    0.212 0.0661 197   0.0813    0.342
+## 
+## Confidence level used: 0.95</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="module-4.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### construct model w/ log-normal distribution</span></span>
+<span id="cb168-2"><a href="module-4.html#cb168-2" aria-hidden="true" tabindex="-1"></a>mod0a <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(<span class="fu">log</span>(var) <span class="sc">~</span> group, <span class="at">data=</span>dat1)</span>
+<span id="cb168-3"><a href="module-4.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(mod0a))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="module-4.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod0a)</span></code></pre></div>
+<pre><code>##  Family: gaussian  ( identity )
+## Formula:          log(var) ~ group
+## Data: dat1
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    585.6    595.5   -289.8    579.6      197 
+## 
+## 
+## Dispersion estimate for gaussian family (sigma^2): 1.06 
+## 
+## Conditional model:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   0.2288     0.1030   2.221   0.0264 *  
+## grouptwo     -2.3798     0.1457 -16.330   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="module-4.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod0a, <span class="sc">~</span>group, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##  group response    SE  df lower.CL upper.CL
+##  one      1.257 0.130 197    1.026    1.540
+##  two      0.116 0.012 197    0.095    0.143
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log scale</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="module-4.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### construct model w/ Gamma distribution and inverse link</span></span>
+<span id="cb173-2"><a href="module-4.html#cb173-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var <span class="sc">~</span> group, <span class="at">data=</span>dat1, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link =</span> <span class="st">&quot;inverse&quot;</span>))</span>
+<span id="cb173-3"><a href="module-4.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(mod1))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="module-4.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<pre><code>##  Family: Gamma  ( inverse )
+## Formula:          var ~ group
+## Data: dat1
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    160.7    170.6    -77.3    154.7      197 
+## 
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.693 
+## 
+## Conditional model:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  0.67003    0.05577   12.01   &lt;2e-16 ***
+## grouptwo     4.05552    0.39726   10.21   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="module-4.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod1, <span class="sc">~</span>group, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##  group response     SE  df lower.CL upper.CL
+##  one      1.492 0.1242 197    1.282    1.786
+##  two      0.212 0.0176 197    0.182    0.253
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the inverse scale</code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="module-4.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### construct model w/ Gamma distribution and log link</span></span>
+<span id="cb178-2"><a href="module-4.html#cb178-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(var <span class="sc">~</span> group, <span class="at">data=</span>dat1, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link =</span> <span class="st">&quot;log&quot;</span>))</span>
+<span id="cb178-3"><a href="module-4.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(mod2))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="module-4.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div>
+<pre><code>##  Family: Gamma  ( log )
+## Formula:          var ~ group
+## Data: dat1
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    160.7    170.6    -77.3    154.7      197 
+## 
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.693 
+## 
+## Conditional model:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  0.40043    0.08323   4.811  1.5e-06 ***
+## grouptwo    -1.95342    0.11771 -16.595  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="module-4.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod2, <span class="sc">~</span>group, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##  group response     SE  df lower.CL upper.CL
+##  one      1.492 0.1242 197     1.27    1.759
+##  two      0.212 0.0176 197     0.18    0.249
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the log scale</code></pre>
+<p>AIC:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="module-4.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(mod0,mod0a,mod1,mod2)</span></code></pre></div>
+<pre><code>##       df      AIC
+## mod0   3 408.0006
+## mod0a  3 585.5705
+## mod1   3 160.6724
+## mod2   3 160.6724</code></pre>
+<p>Which model is the best ranked model?</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="module-5.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-Module_4.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

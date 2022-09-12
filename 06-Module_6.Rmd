@@ -1,0 +1,343 @@
+# Module 6
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE,
+                      message = FALSE, fig.align = "center",
+                      fig.width = 10,
+                      fig.height = 8)
+```
+
+## 6A. Poisson GLMMs
+
+In this module we will go over a variety of more advanced models. We will start with Poisson GLMMs. Let's first load the libraries we will need:
+```{r}
+library(tidyverse)
+library(emmeans)
+library(car)
+library(agridat)
+library(lme4)
+library(lmerTest)
+library(glmmTMB)
+library(DHARMa)
+library(performance)
+library(MuMIn)
+library(bbmle)
+library(aods3)
+```
+
+Let's load in and read about the beall.webworms dataset. The variables of interest are the y-count of webworms, spray- spray treatment, and lead-lead treatment. Don't worry about the block or other variables for now.
+```{r}
+data("beall.webworms")
+d1 <- beall.webworms
+?beall.webworms  ## info about the beall.webworms dataset
+```
+
+```{r}
+head(d1) ## view data set
+```
+
+Let's examine a plot of data:
+```{r}
+ggplot(d1, aes(x=spray, y=y, fill=lead)) +
+  geom_violin(scale="width", adjust=2) + 
+  geom_point(position = position_jitterdodge(jitter.width=.5,
+                                             jitter.height=.1,
+                                             dodge.width = 1),
+             alpha=.1)+
+  facet_wrap(~block)
+```
+
+Here we create two models, r1 and r2. They were previously used in module 4C:
+```{r}
+r1 <- glm(y ~ spray * lead, data=d1, family="poisson")
+summary(r1)
+Anova(r1)
+emmeans(r1, ~spray:lead, type='response') 
+```
+
+We check overdispersion in the model:
+```{r}
+check_overdispersion(r1) # overdispersion ratio calculator from performance
+```
+
+Now let's implment the r2 model with a negative binomial error distribution:
+```{r}
+r2 <- glmmTMB(y ~ spray * lead, data=d1, family="nbinom2")
+Anova(r2)
+emmeans(r2, ~spray:lead, type='response') 
+```
+
+Now let's simulate residuals for poisson and negative binomial models:
+```{r}
+plot(simulateResiduals(r1))
+hist(simulateResiduals(r1)) ## histogram should be flat
+```
+```{r}
+plot(simulateResiduals(r2))
+hist(simulateResiduals(r2)) ## histogram should be flat
+```
+
+## Improving the models: What's next?
+What's next? Any aspects of the experimental design missing from the model? 
+
+We can construct models that includes any missing factors.
+
+We can also make an individual-level random effect to use for overdispersed poisson:
+```{r}
+d1$obs <- 1:length(d1$y) ## makes a unique number for each row in dataset
+```
+
+We can also create other models that include different random effects that account for blocks:
+```{r}
+r0 <- glmmTMB(y ~ spray * lead, data=d1, family="gaussian")              ### gaussian glm just to see how bad it really is
+r1 <- glmmTMB(y ~ spray * lead, data=d1, family="poisson")               ### poisson glm
+r2 <- glmmTMB(y ~ spray * lead, data=d1, family="nbinom2")               ### nb glm
+r3 <- glmmTMB(y ~ spray * lead + (1|obs), data=d1, family="poisson")     ### overdispersed poisson glm
+r4 <- glmmTMB(y ~ spray * lead + (1|block), data=d1, family="nbinom2")   ### nb w/ block
+r5 <- glmmTMB(y ~ spray * lead + (1|obs) + (1|block), data=d1, family="poisson")   ### OD poisson w/ block
+```
+
+Six models above differ only distribution and random effects. Fixed effects are the same. We can now use AIC for selecting the most appropriate distribution and random effects:
+```{r}
+#### for model selection, use AIC or likihood ratio test
+model.sel(r0,r1,r2,r3,r4,r5) ## from MuMIn
+AICtab(r0,r1,r2,r3,r4,r5,base=T,logLik=T,weights=T)    ## from bbmle
+```
+
+Now for further model interpretation you can examine residuals, fixed effects using Anova(), emmeans, etc.
+
+## 6B. Binomial and Beta GLMMs
+
+### Binomial
+
+In this section we look at the binomial distribution. Let's load in the data we will use:
+```{r}
+data("wheatley.carrot")
+?wheatley.carrot
+```
+
+Let's clean it up a bit:
+```{r}
+dat1 <- wheatley.carrot %>% filter(insecticide!='nil')
+dat1$propdmg <- dat1$damaged/dat1$total
+head(dat1) 
+```
+
+```{r}
+hist(dat1$propdmg)
+```
+
+Now let's plot out the data. Note that for plotting we can use the "beta_family" although for analysis we use "binomial".
+```{r}
+ggplot(dat1, aes(x=log(depth),
+                 y=(damaged/total), color=insecticide)) +
+  geom_point(size=3) + 
+  theme_bw(base_size = 16)
+```
+
+
+```{r}
+ggplot(dat1, aes(x=log(depth), y=(damaged/total), color=insecticide)) +
+  geom_point(size=3) +
+  geom_smooth(method='glm',
+              method.args=list(family="beta_family"),
+              formula = y~x) +
+  theme_bw(base_size = 16)
+```
+
+
+```{r}
+ggplot(dat1, aes(x=log(depth), y=(damaged/total),
+                 color=insecticide)) + geom_point() +
+  geom_smooth(method='glm', 
+              method.args=list(family="beta_family"), 
+              formula = y~x+I(x^2))
+
+```
+
+Now let's build two different binomical GLMMs with different set ups:
+```{r}
+mod1 <- glmmTMB(cbind(damaged,total-damaged) ~ insecticide * depth + (1|rep), data=dat1, family='binomial')
+
+mod2 <- glmmTMB(cbind(damaged,total-damaged) ~ insecticide * depth + I(depth^2) + (1|rep), data=dat1, family='binomial')
+```
+Note above that mod2 is applying a non-linear modification where we include depth and depth squared. The "^" is another way of saying raise depth to the 2nd power. The I() isolate this and tells the R interpreter that the model is including a second order fixed effect. For more info check ?formula.
+
+We can plot residuals:
+```{r}
+plot(simulateResiduals(mod1))
+plot(simulateResiduals(mod2))
+```
+Which of the two is better?
+
+We can also run ANOVAs on the models:
+```{r}
+Anova(mod1)
+Anova(mod2)
+```
+
+## 6C. Beta Distributions
+
+In this section we show an example of applying the beta family using true proportions (or percentages). First let's load  data:
+```{r}
+b1 <-read_csv("LynnETAL_2022_Ecography_sodCaseStudy.csv") %>%
+  filter(species=='SALA')
+head(b1)
+```
+
+Let's examine a histogram:
+```{r}
+hist(b1$mean_herb) ## examine histogram. Data are entered as percentage (0-100%)
+```
+
+Let's plot out the data. Note: data was collected at 42 unique sites (one data point per site).
+```{r}
+ggplot(b1 , aes(x=latitude, y=mean_herb)) +
+  geom_point()
+```
+
+Now we need to convert to proportion and then do a small transformation to remove 0 and 1:
+```{r}
+b1$mean_herb1 <- (b1$mean_herb/100)
+b1$mean_herb1 <- (b1$mean_herb1*(length(b1$mean_herb1)-1)+.5)/length(b1$mean_herb1)
+```
+
+Let's plot this:
+```{r}
+ggplot(b1, aes(x=latitude, y=mean_herb1)) + geom_point() +
+  geom_smooth(method='glm', 
+              method.args=list(family="beta_family"),
+              formula = y~x)
+```
+
+Now let's build a beta GLMM:
+```{r}
+
+bm1 <- glmmTMB(mean_herb1 ~ latitude, data=b1, family='beta_family')
+Anova(bm1)
+```
+
+Check the summary:
+```{r}
+summary(bm1)
+```
+
+Plot and check residuals:
+```{r}
+plot(simulateResiduals(bm1)) ## QQ plot is good. Resid vs pred is wiggle, probably ok.
+```
+
+## 6D. Problem set
+
+1. Problem set with real data (Rivkin et al. 2018 Am J Bot) 
+
+Herbivory data was collected on 43 populations of an aquatic plant across a latitudinal gradient in Canada. At each population, many plants (~5-15) were examined for herbivory damage. Some additional covariates were recorded, such as Competition around the plant (1-3 from less to more) and plant height (cm).
+
+Read in data:
+```{r}
+d1 <-read.csv("ajb21098-sup-0002-appendixs2.csv")
+head(d1)
+hist(d1$LeafDamage)
+```
+Let's remove 0's and 1's (see Smithson & Verkuilen 2006 or Douma & Weedon 2018):
+```{r}
+d1$LeafDamage <- (d1$LeafDamage*(length(d1$LeafDamage)-1)+.5)/length(d1$LeafDamage)
+```
+
+Now plot data:
+```{r}
+ggplot(d1 , aes(x=Latitude, y=LeafDamage)) +
+  geom_point() +
+  geom_smooth(method='glm', 
+              method.args=list(family="beta_family"),
+              formula = y~x)
+```
+
+Question: Does herbivory increase towards the equator? How do residuals look? Any way to improve them?
+
+2. Problem set with real data (Rivkin et al. 2018 Am J Bot), Rats dataset with only females. Half treated with a drug and the other half were untreated. Then they checked for tumors.Does the drug reduce probability of developing tumor? After 50 days? After 100 days?
+
+Load data:
+```{r}
+library(survival)
+rats <- rats %>% filter(sex=="f")
+?rats
+head(rats)
+```
+
+Plot data:
+```{r}
+ggplot(rats , aes(x=time, y=status)) + 
+  geom_point() +
+  geom_smooth(method='glm', 
+              method.args=list(family="binomial"), 
+              formula = y~x) + 
+  facet_wrap(~rx)
+```
+
+## 6E.x Zero-Inflated Models
+
+In this section we will go over applying zero-inflated models. First let's load the data (wheatley carrot infection by carrot fly larvae):
+```{r}
+data("ridout.appleshoots")
+```
+
+Let's clean up the data and check out the distribution of the data in question:
+```{r}
+dat1 <- ridout.appleshoots %>% mutate(photo=as.factor(photo))
+hist(dat1$roots)
+```
+
+Now let's run several models: a Poisson, a negative binomial, and a negative binomial with a general intercept for zero inflation:
+```{r}
+## poisson model
+mod1 <- glmmTMB(roots ~ photo * bap , data=dat1, family='poisson')
+plot(simulateResiduals(mod1))
+```
+
+```{r}
+## negative binomial model
+mod2 <- glmmTMB(roots ~ photo * bap , data=dat1, family='nbinom2')
+plot(simulateResiduals(mod2))
+```
+
+```{r}
+## negative binomial w/ a general intercept for zero inflation (ie. ZI equal for all observations)
+mod3 <- glmmTMB(roots ~ photo * bap , data=dat1, family='nbinom2', zi=~1)
+plot(simulateResiduals(mod3))
+```
+```{r}
+summary(mod3) ## back-transform ZI intercept (exp(p)/(1+exp(p)))
+```
+
+What do we expect to cause the zero inflation? We can check out further details in the data's metadata:
+```{r}
+??ridout.appleshoots
+```
+
+```{r}
+ggplot(dat1, aes(x=roots)) + 
+  geom_histogram() +
+  facet_grid(bap~photo) + 
+  theme_bw(base_size=16)
+```
+
+Now let's run a negative binomial with zero inflation specified by treatment:
+```{r}
+mod4 <- glmmTMB(roots ~ photo * bap , data=dat1, family='nbinom2', zi=~photo)
+summary(mod4)
+```
+
+Plot residuals:
+```{r}
+plot(simulateResiduals(mod4))
+```
+
+Now let's compare all models with AIC. Which one was the best? Why do you think?
+```{r}
+### check with AIC
+AIC(mod1,mod2,mod3,mod4)
+```
+
+
+

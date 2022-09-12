@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Module 5 | Statistics in R</title>
+  <meta name="description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Module 5 | Statistics in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Module 5 | Statistics in R" />
+  
+  <meta name="twitter:description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Phil Hahn &amp; Leo Ohyama" />
+
+
+<meta name="date" content="2022-09-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="module-4.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistics in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like <span>https://bookdown.org/yihui/bookdown</span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="module-2.html"><a href="module-2.html"><i class="fa fa-check"></i><b>2</b> Module 2</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="module-2.html"><a href="module-2.html#a.-introduction-to-data-visualization"><i class="fa fa-check"></i><b>2.1</b> 2A. Introduction to Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="module-2.html"><a href="module-2.html#continuous-variables"><i class="fa fa-check"></i><b>2.1.1</b> Continuous Variables</a></li>
+<li class="chapter" data-level="2.1.2" data-path="module-2.html"><a href="module-2.html#fancy-scatterplots"><i class="fa fa-check"></i><b>2.1.2</b> Fancy Scatterplots</a></li>
+<li class="chapter" data-level="2.1.3" data-path="module-2.html"><a href="module-2.html#continuous-variables-1"><i class="fa fa-check"></i><b>2.1.3</b> Continuous Variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="module-2.html"><a href="module-2.html#different-types-of-plots-for-categorical-data-with-ggplot2"><i class="fa fa-check"></i><b>2.1.4</b> Different types of plots for categorical data with ggplot2</a></li>
+<li class="chapter" data-level="2.1.5" data-path="module-2.html"><a href="module-2.html#breakout-group-challenge"><i class="fa fa-check"></i><b>2.1.5</b> Breakout group challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="module-2.html"><a href="module-2.html#b.-introduction-to-regression"><i class="fa fa-check"></i><b>2.2</b> 2B. Introduction to Regression</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="module-2.html"><a href="module-2.html#an-example-of-linear-regression-in-r"><i class="fa fa-check"></i><b>2.2.1</b> An Example of Linear Regression in R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="module-2.html"><a href="module-2.html#regression-challenge"><i class="fa fa-check"></i><b>2.2.2</b> Regression Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="module-2.html"><a href="module-2.html#c.-introduction-to-anova"><i class="fa fa-check"></i><b>2.3</b> 2C. Introduction to ANOVA</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="module-2.html"><a href="module-2.html#example-of-a-one-way-anova-in-r"><i class="fa fa-check"></i><b>2.3.1</b> Example of a one-way ANOVA in R</a></li>
+<li class="chapter" data-level="2.3.2" data-path="module-2.html"><a href="module-2.html#anova-challenge"><i class="fa fa-check"></i><b>2.3.2</b> ANOVA Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="module-2.html"><a href="module-2.html#extra-data-visualization"><i class="fa fa-check"></i><b>2.4</b> Extra Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="module-2.html"><a href="module-2.html#adding-averages-to-plots-part-2"><i class="fa fa-check"></i><b>2.4.1</b> Adding averages to plots part 2</a></li>
+<li class="chapter" data-level="2.4.2" data-path="module-2.html"><a href="module-2.html#r-challenge"><i class="fa fa-check"></i><b>2.4.2</b> R Challenge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="module-3.html"><a href="module-3.html"><i class="fa fa-check"></i><b>3</b> Module 3</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="module-3.html"><a href="module-3.html#a.-data-management"><i class="fa fa-check"></i><b>3.1</b> 3A. Data Management</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="module-3.html"><a href="module-3.html#making-and-modifying-variables"><i class="fa fa-check"></i><b>3.1.1</b> Making and modifying variables</a></li>
+<li class="chapter" data-level="3.1.2" data-path="module-3.html"><a href="module-3.html#variables-with-the-tidyverse"><i class="fa fa-check"></i><b>3.1.2</b> Variables with the tidyverse</a></li>
+<li class="chapter" data-level="3.1.3" data-path="module-3.html"><a href="module-3.html#reshape-data-for-better-usability"><i class="fa fa-check"></i><b>3.1.3</b> Reshape data for better usability</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="module-3.html"><a href="module-3.html#b.-data-exploration"><i class="fa fa-check"></i><b>3.2</b> 3B. Data Exploration</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="module-3.html"><a href="module-3.html#distributions-summary-statistics"><i class="fa fa-check"></i><b>3.2.1</b> Distributions &amp; summary statistics</a></li>
+<li class="chapter" data-level="3.2.2" data-path="module-3.html"><a href="module-3.html#examining-for-outliers"><i class="fa fa-check"></i><b>3.2.2</b> Examining for outliers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="module-3.html"><a href="module-3.html#explore-relationships"><i class="fa fa-check"></i><b>3.2.3</b> Explore relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="module-3.html"><a href="module-3.html#c.-model-selection"><i class="fa fa-check"></i><b>3.3</b> 3C. Model Selection</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="module-3.html"><a href="module-3.html#quick-introduction"><i class="fa fa-check"></i><b>3.3.1</b> Quick introduction</a></li>
+<li class="chapter" data-level="3.3.2" data-path="module-3.html"><a href="module-3.html#basic-calculations"><i class="fa fa-check"></i><b>3.3.2</b> Basic calculations</a></li>
+<li class="chapter" data-level="3.3.3" data-path="module-3.html"><a href="module-3.html#aicc"><i class="fa fa-check"></i><b>3.3.3</b> AICc</a></li>
+<li class="chapter" data-level="3.3.4" data-path="module-3.html"><a href="module-3.html#case-study-with-aic"><i class="fa fa-check"></i><b>3.3.4</b> Case study with AIC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="module-4.html"><a href="module-4.html"><i class="fa fa-check"></i><b>4</b> Module 4</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="module-4.html"><a href="module-4.html#a.-generalized-models"><i class="fa fa-check"></i><b>4.1</b> 4A. Generalized Models</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="module-4.html"><a href="module-4.html#example-conducting-a-one-way-anova-with-non-normal-data"><i class="fa fa-check"></i><b>4.1.1</b> Example: Conducting a one-way ANOVA with non-normal data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="module-4.html"><a href="module-4.html#log-linear-model"><i class="fa fa-check"></i><b>4.1.2</b> Log-linear model</a></li>
+<li class="chapter" data-level="4.1.3" data-path="module-4.html"><a href="module-4.html#generalized-linear-models"><i class="fa fa-check"></i><b>4.1.3</b> Generalized linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="module-4.html"><a href="module-4.html#b.-overdispersion"><i class="fa fa-check"></i><b>4.2</b> 4B. Overdispersion</a></li>
+<li class="chapter" data-level="4.3" data-path="module-4.html"><a href="module-4.html#c.-binomial-glm"><i class="fa fa-check"></i><b>4.3</b> 4C. Binomial GLM</a></li>
+<li class="chapter" data-level="4.4" data-path="module-4.html"><a href="module-4.html#gamma-glm"><i class="fa fa-check"></i><b>4.4</b> Gamma GLM</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="module-4.html"><a href="module-4.html#example-1"><i class="fa fa-check"></i><b>4.4.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.4.2" data-path="module-4.html"><a href="module-4.html#example-2"><i class="fa fa-check"></i><b>4.4.2</b> Example 2</a></li>
+<li class="chapter" data-level="4.4.3" data-path="module-4.html"><a href="module-4.html#example-3"><i class="fa fa-check"></i><b>4.4.3</b> Example 3</a></li>
+<li class="chapter" data-level="4.4.4" data-path="module-4.html"><a href="module-4.html#example-4"><i class="fa fa-check"></i><b>4.4.4</b> Example 4</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="module-4.html"><a href="module-4.html#running-gamma-glms"><i class="fa fa-check"></i><b>4.5</b> Running Gamma GLMs</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="module-5.html"><a href="module-5.html"><i class="fa fa-check"></i><b>5</b> Module 5</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="module-5.html"><a href="module-5.html#a.-ancovas-in-r"><i class="fa fa-check"></i><b>5.1</b> 5A. ANCOVAs in R</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="module-5.html"><a href="module-5.html#ancova-multiple-intercept-model"><i class="fa fa-check"></i><b>5.1.1</b> ANCOVA: multiple intercept model</a></li>
+<li class="chapter" data-level="5.1.2" data-path="module-5.html"><a href="module-5.html#ancova-multiple-intercept-and-slope-model"><i class="fa fa-check"></i><b>5.1.2</b> ANCOVA: multiple intercept AND slope model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="module-5.html"><a href="module-5.html#b.-block-designs"><i class="fa fa-check"></i><b>5.2</b> 5B. Block Designs</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="module-5.html"><a href="module-5.html#data-and-plotting"><i class="fa fa-check"></i><b>5.2.1</b> Data and Plotting</a></li>
+<li class="chapter" data-level="5.2.2" data-path="module-5.html"><a href="module-5.html#models"><i class="fa fa-check"></i><b>5.2.2</b> Models</a></li>
+<li class="chapter" data-level="5.2.3" data-path="module-5.html"><a href="module-5.html#blocks-as-random-effects"><i class="fa fa-check"></i><b>5.2.3</b> Blocks as Random Effects</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistics in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-5" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Module 5<a href="module-5.html#module-5" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="a.-ancovas-in-r" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> 5A. ANCOVAs in R<a href="module-5.html#a.-ancovas-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will need the following libraries:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="module-5.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   </span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+## ✔ tibble  3.1.8     ✔ dplyr   1.0.9
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.0.1     ✔ forcats 0.5.1</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="module-5.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="do">### helpful for analyzing linear models</span></span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     some</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="module-5.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans) <span class="do">### helpful for getting means from linear models</span></span></code></pre></div>
+<p>Here we assemble data with a covariate (don’t worry about the code):</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="module-5.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
+<span id="cb15-2"><a href="module-5.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;InsectSprays&quot;</span>)</span>
+<span id="cb15-3"><a href="module-5.html#cb15-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> InsectSprays <span class="sc">%&gt;%</span> <span class="fu">filter</span>(spray<span class="sc">==</span><span class="st">&#39;A&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;B&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;C&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;F&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="module-5.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span>
+<span id="cb15-5"><a href="module-5.html#cb15-5" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>count[<span class="dv">13</span><span class="sc">:</span><span class="dv">24</span>] <span class="ot">&lt;-</span> d<span class="sc">$</span>count[<span class="dv">13</span><span class="sc">:</span><span class="dv">24</span>]<span class="sc">+</span><span class="dv">5</span></span>
+<span id="cb15-6"><a href="module-5.html#cb15-6" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>weeds <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">48</span>,<span class="dv">2</span><span class="sc">*</span>d<span class="sc">$</span>count,<span class="dv">10</span>),<span class="dv">1</span>))</span>
+<span id="cb15-7"><a href="module-5.html#cb15-7" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>weeds[<span class="dv">25</span><span class="sc">:</span><span class="dv">36</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">55.3</span>,<span class="fl">46.8</span>,<span class="fl">30.2</span>,<span class="fl">62.3</span>,<span class="fl">24.2</span>,<span class="fl">33.2</span>,<span class="fl">18.2</span>,<span class="fl">12.6</span>,<span class="fl">39.7</span>,<span class="fl">41.0</span>,<span class="fl">46.9</span>,<span class="fl">42.8</span>)</span></code></pre></div>
+<p>Let’s plot the raw data:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="module-5.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x=</span>spray,<span class="at">y=</span>count)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="module-5.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="module-5.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>,<span class="at">width=</span>.<span class="dv">1</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Let’s run a model with counts as a function of spray (an ANOVA) and get the pairwise means:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="module-5.html#cb17-1" aria-hidden="true" tabindex="-1"></a>anova_means <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(<span class="fu">lm</span>(count<span class="sc">~</span>spray, <span class="at">data=</span>d), pairwise<span class="sc">~</span>spray) </span>
+<span id="cb17-2"><a href="module-5.html#cb17-2" aria-hidden="true" tabindex="-1"></a>anova_means</span></code></pre></div>
+<pre><code>## $emmeans
+##  spray emmean   SE df lower.CL upper.CL
+##  A      14.50 1.32 44   11.849    17.15
+##  B      20.33 1.32 44   17.683    22.98
+##  C       2.08 1.32 44   -0.567     4.73
+##  F      16.67 1.32 44   14.016    19.32
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast estimate   SE df t.ratio p.value
+##  A - B       -5.83 1.86 44  -3.136  0.0155
+##  A - C       12.42 1.86 44   6.676  &lt;.0001
+##  A - F       -2.17 1.86 44  -1.165  0.6518
+##  B - C       18.25 1.86 44   9.812  &lt;.0001
+##  B - F        3.67 1.86 44   1.971  0.2143
+##  C - F      -14.58 1.86 44  -7.841  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<p>Now let’s plot out the data with weed cover:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="module-5.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x=</span>weeds,<span class="at">y=</span>count)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="module-5.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href="module-5.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>spray) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="module-5.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div id="ancova-multiple-intercept-model" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> ANCOVA: multiple intercept model<a href="module-5.html#ancova-multiple-intercept-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s run our ANCOVA model:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="module-5.html#cb21-1" aria-hidden="true" tabindex="-1"></a>lm1i <span class="ot">&lt;-</span> <span class="fu">lm</span>(count <span class="sc">~</span> spray <span class="sc">+</span> weeds, <span class="at">data=</span>d)</span></code></pre></div>
+<p>Let’s get an ANOVA table with Type II sums of squares (aka Type III SS):</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="module-5.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(lm1i, <span class="at">type=</span><span class="dv">2</span>) </span></code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: count
+##            Sum Sq Df F value    Pr(&gt;F)    
+## spray     2098.05  3  68.134 2.229e-16 ***
+## weeds      471.88  1  45.973 2.679e-08 ***
+## Residuals  441.37 43                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Don’t use the base anova! Switch terms around in the model and see what happens:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="module-5.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm1i)  </span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: count
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## spray      3 2256.23  752.08  73.270 &lt; 2.2e-16 ***
+## weeds      1  471.88  471.88  45.973 2.679e-08 ***
+## Residuals 43  441.37   10.26                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="module-5.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1i) <span class="do">## model coefficients</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = count ~ spray + weeds, data = d)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -6.030 -2.155 -0.057  1.744  6.526 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   7.69502    1.36479   5.638 1.23e-06 ***
+## sprayB        2.88374    1.37840   2.092   0.0424 *  
+## sprayC      -13.64507    1.32044 -10.334 3.16e-13 ***
+## sprayF        1.48599    1.31180   1.133   0.2636    
+## weeds         0.21271    0.03137   6.780 2.68e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.204 on 43 degrees of freedom
+## Multiple R-squared:  0.8607, Adjusted R-squared:  0.8478 
+## F-statistic: 66.45 on 4 and 43 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Here we can calculate estimated marginal mean for each group (ie. groups means after accounting for the effect of weeds). We can extract the emmean means (ie. group means after accounting for the effect of weeds):</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="module-5.html#cb28-1" aria-hidden="true" tabindex="-1"></a>ancova_means <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(lm1i, pairwise<span class="sc">~</span>spray)  </span>
+<span id="cb28-2"><a href="module-5.html#cb28-2" aria-hidden="true" tabindex="-1"></a>ancova_means</span></code></pre></div>
+<pre><code>## $emmeans
+##  spray emmean    SE df lower.CL upper.CL
+##  A      15.71 0.942 43   13.815    17.61
+##  B      18.60 0.960 43   16.663    20.53
+##  C       2.07 0.925 43    0.204     3.93
+##  F      17.20 0.928 43   15.329    19.07
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast estimate   SE df t.ratio p.value
+##  A - B       -2.88 1.38 43  -2.092  0.1720
+##  A - C       13.65 1.32 43  10.334  &lt;.0001
+##  A - F       -1.49 1.31 43  -1.133  0.6716
+##  B - C       16.53 1.33 43  12.406  &lt;.0001
+##  B - F        1.40 1.35 43   1.035  0.7298
+##  C - F      -15.13 1.31 43 -11.547  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<p>This code is just for adding features of the model to the graph:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="module-5.html#cb30-1" aria-hidden="true" tabindex="-1"></a>lm1i_coef <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">emmeans</span>(lm1i, <span class="sc">~</span>spray))</span></code></pre></div>
+<p>Now let’s extract intercepts and add slopes into new dataframe:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="module-5.html#cb31-1" aria-hidden="true" tabindex="-1"></a>lm1i_coef2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">emmeans</span>(lm1i, <span class="sc">~</span>spray, <span class="at">at=</span><span class="fu">list</span>(<span class="at">weeds=</span><span class="dv">0</span>)))</span>
+<span id="cb31-2"><a href="module-5.html#cb31-2" aria-hidden="true" tabindex="-1"></a>lm1i_coef2<span class="sc">$</span>slope <span class="ot">&lt;-</span> <span class="fu">coef</span>(lm1i)[<span class="dv">5</span>]</span></code></pre></div>
+<p>We can now plot the data with the fitted model:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="module-5.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>d, <span class="fu">aes</span>(<span class="at">x=</span>weeds,<span class="at">y=</span>count)) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="module-5.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb32-3"><a href="module-5.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>spray) <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="module-5.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data=</span>lm1i_coef2,</span>
+<span id="cb32-5"><a href="module-5.html#cb32-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">intercept=</span>emmean, <span class="at">slope=</span>slope)) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="module-5.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>lm1i_coef2,</span>
+<span id="cb32-7"><a href="module-5.html#cb32-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">y=</span>emmean),<span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="module-5.html#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>lm1i_coef,</span>
+<span id="cb32-9"><a href="module-5.html#cb32-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">mean</span>(d<span class="sc">$</span>weeds),<span class="at">y=</span>emmean),</span>
+<span id="cb32-10"><a href="module-5.html#cb32-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;blue&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="ancova-multiple-intercept-and-slope-model" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> ANCOVA: multiple intercept AND slope model<a href="module-5.html#ancova-multiple-intercept-and-slope-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This is how we do an ANCOVA with multiple intercept and slopes:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="module-5.html#cb33-1" aria-hidden="true" tabindex="-1"></a>lm1is <span class="ot">&lt;-</span> <span class="fu">lm</span>(count <span class="sc">~</span> spray <span class="sc">+</span> weeds <span class="sc">+</span> spray<span class="sc">:</span>weeds, <span class="at">data=</span>d)</span></code></pre></div>
+<p>Another way to code the above would be:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="module-5.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(count <span class="sc">~</span> spray <span class="sc">*</span> weeds, <span class="at">data=</span>d)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = count ~ spray * weeds, data = d)
+## 
+## Coefficients:
+##  (Intercept)        sprayB        sprayC        sprayF         weeds  
+##     5.619631      2.440328     -2.441189      0.613378      0.277584  
+## sprayB:weeds  sprayC:weeds  sprayF:weeds  
+##    -0.009947     -0.306581      0.018897</code></pre>
+<p>Let’s get an ANOVA table and a summary of the model:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="module-5.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(lm1is, <span class="at">type=</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: count
+##              Sum Sq Df  F value    Pr(&gt;F)    
+## spray       2098.05  3 108.0786 &lt; 2.2e-16 ***
+## weeds        471.88  1  72.9254 1.489e-10 ***
+## spray:weeds  182.54  3   9.4033 7.898e-05 ***
+## Residuals    258.83 40                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="module-5.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1is)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = count ~ spray + weeds + spray:weeds, data = d)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -5.780 -1.323 -0.246  1.230  5.843 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   5.619631   1.837847   3.058 0.003965 ** 
+## sprayB        2.440328   3.408876   0.716 0.478227    
+## sprayC       -2.441189   2.788364  -0.875 0.386534    
+## sprayF        0.613378   2.439710   0.251 0.802781    
+## weeds         0.277584   0.052663   5.271 4.98e-06 ***
+## sprayB:weeds -0.009947   0.080228  -0.124 0.901948    
+## sprayC:weeds -0.306581   0.074015  -4.142 0.000173 ***
+## sprayF:weeds  0.018897   0.066459   0.284 0.777614    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.544 on 40 degrees of freedom
+## Multiple R-squared:  0.9183, Adjusted R-squared:  0.904 
+## F-statistic: 64.26 on 7 and 40 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Here we calculate estimated marginal mean for each group (ie. groups means after accounting for the effect of weeds):</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="module-5.html#cb40-1" aria-hidden="true" tabindex="-1"></a>ancova_is_means <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(lm1is, pairwise<span class="sc">~</span>spray)  </span></code></pre></div>
+<pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="module-5.html#cb42-1" aria-hidden="true" tabindex="-1"></a>ancova_is_means</span></code></pre></div>
+<pre><code>## $emmeans
+##  spray emmean    SE df lower.CL upper.CL
+##  A      16.09 0.794 40   14.481    17.69
+##  B      18.15 0.885 40   16.362    19.94
+##  C       2.09 0.734 40    0.601     3.57
+##  F      17.41 0.741 40   15.913    18.91
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast estimate   SE df t.ratio p.value
+##  A - B      -2.065 1.19 40  -1.738  0.3182
+##  A - C      14.000 1.08 40  12.949  &lt;.0001
+##  A - F      -1.326 1.09 40  -1.221  0.6175
+##  B - C      16.065 1.15 40  13.972  &lt;.0001
+##  B - F       0.739 1.15 40   0.641  0.9182
+##  C - F     -15.326 1.04 40 -14.687  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<p>We can calculate the slope for each group:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="module-5.html#cb44-1" aria-hidden="true" tabindex="-1"></a>ancova_is_slopes <span class="ot">&lt;-</span> <span class="fu">emtrends</span>(lm1is, pairwise<span class="sc">~</span>spray, <span class="at">var=</span><span class="st">&quot;weeds&quot;</span>)  </span>
+<span id="cb44-2"><a href="module-5.html#cb44-2" aria-hidden="true" tabindex="-1"></a>ancova_is_slopes</span></code></pre></div>
+<pre><code>## $emtrends
+##  spray weeds.trend     SE df lower.CL upper.CL
+##  A           0.278 0.0527 40    0.171   0.3840
+##  B           0.268 0.0605 40    0.145   0.3900
+##  C          -0.029 0.0520 40   -0.134   0.0761
+##  F           0.296 0.0405 40    0.215   0.3784
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast estimate     SE df t.ratio p.value
+##  A - B     0.00995 0.0802 40   0.124  0.9993
+##  A - C     0.30658 0.0740 40   4.142  0.0010
+##  A - F    -0.01890 0.0665 40  -0.284  0.9919
+##  B - C     0.29663 0.0798 40   3.717  0.0033
+##  B - F    -0.02884 0.0728 40  -0.396  0.9787
+##  C - F    -0.32548 0.0659 40  -4.936  0.0001
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<p>We can extract the emmean means (ie. group means after accounting for the effect of weeds):</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="module-5.html#cb46-1" aria-hidden="true" tabindex="-1"></a>lm1is_coef <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">emmeans</span>(lm1is, <span class="sc">~</span>spray))</span></code></pre></div>
+<pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
+<p>Also we can extract intercepts and add slopes into new dataframe:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="module-5.html#cb48-1" aria-hidden="true" tabindex="-1"></a>lm1is_coef2a <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">emmeans</span>(lm1is, <span class="sc">~</span>spray, <span class="at">at=</span><span class="fu">list</span>(<span class="at">weeds=</span><span class="dv">0</span>)))</span></code></pre></div>
+<pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="module-5.html#cb50-1" aria-hidden="true" tabindex="-1"></a>lm1is_coef2b <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">emtrends</span>(lm1is, <span class="at">var=</span><span class="st">&quot;weeds&quot;</span>))</span>
+<span id="cb50-2"><a href="module-5.html#cb50-2" aria-hidden="true" tabindex="-1"></a>lm1is_coef2 <span class="ot">&lt;-</span> <span class="fu">full_join</span>(lm1is_coef2a,lm1is_coef2b,<span class="at">by=</span><span class="st">&quot;spray&quot;</span>)</span></code></pre></div>
+<p>Finally we can plot the data of the fitted model:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="module-5.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>d, <span class="fu">aes</span>(<span class="at">x=</span>weeds,<span class="at">y=</span>count)) <span class="sc">+</span></span>
+<span id="cb51-2"><a href="module-5.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb51-3"><a href="module-5.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>spray) <span class="sc">+</span> </span>
+<span id="cb51-4"><a href="module-5.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data=</span>lm1is_coef2, <span class="fu">aes</span>(<span class="at">intercept=</span>emmean,</span>
+<span id="cb51-5"><a href="module-5.html#cb51-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">slope=</span>weeds.trend), <span class="at">lty=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb51-6"><a href="module-5.html#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>lm1is_coef2, </span>
+<span id="cb51-7"><a href="module-5.html#cb51-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">y=</span>emmean),</span>
+<span id="cb51-8"><a href="module-5.html#cb51-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-9"><a href="module-5.html#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>lm1is_coef,</span>
+<span id="cb51-10"><a href="module-5.html#cb51-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">mean</span>(d<span class="sc">$</span>weeds),<span class="at">y=</span>emmean),</span>
+<span id="cb51-11"><a href="module-5.html#cb51-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;purple&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Here’s an alternative nice plot of the data with weed cover:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="module-5.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x=</span>weeds,<span class="at">y=</span>count)) <span class="sc">+</span></span>
+<span id="cb52-2"><a href="module-5.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb52-3"><a href="module-5.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>spray) <span class="sc">+</span> </span>
+<span id="cb52-4"><a href="module-5.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>, <span class="at">color=</span><span class="st">&#39;black&#39;</span>)<span class="sc">+</span></span>
+<span id="cb52-5"><a href="module-5.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">16</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+</div>
+<div id="b.-block-designs" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> 5B. Block Designs<a href="module-5.html#b.-block-designs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-and-plotting" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Data and Plotting<a href="module-5.html#data-and-plotting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s load the packages and data:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="module-5.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb54-2"><a href="module-5.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb54-3"><a href="module-5.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;InsectSprays&quot;</span>)</span></code></pre></div>
+<p>Now we can add our blocks to the data:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="module-5.html#cb55-1" aria-hidden="true" tabindex="-1"></a>InsectSprays<span class="sc">$</span>block <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>), <span class="dv">6</span>)) </span>
+<span id="cb55-2"><a href="module-5.html#cb55-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> InsectSprays <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="module-5.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(spray<span class="sc">==</span><span class="st">&#39;A&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;B&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;C&#39;</span><span class="sc">|</span>spray<span class="sc">==</span><span class="st">&#39;F&#39;</span>)</span>
+<span id="cb55-4"><a href="module-5.html#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(d)</span></code></pre></div>
+<pre><code>## Rows: 48
+## Columns: 3
+## $ count &lt;dbl&gt; 10, 7, 20, 14, 14, 12, 10, 23, 17, 20, 14, 13, 11, 17, 21, 11, 1…
+## $ spray &lt;fct&gt; A, A, A, A, A, A, A, A, A, A, A, A, B, B, B, B, B, B, B, B, B, B…
+## $ block &lt;fct&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9…</code></pre>
+<p>We can graph the data by treatment group:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="module-5.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot data by treatment group</span></span>
+<span id="cb57-2"><a href="module-5.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x=</span>spray,<span class="at">y=</span>count)) <span class="sc">+</span></span>
+<span id="cb57-3"><a href="module-5.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb57-4"><a href="module-5.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>,<span class="at">width=</span>.<span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>A plot by treatment and block (note one observation per block):</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="module-5.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x=</span>spray,<span class="at">y=</span>count)) <span class="sc">+</span></span>
+<span id="cb58-2"><a href="module-5.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="module-5.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="dv">0</span>,<span class="at">width=</span>.<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb58-4"><a href="module-5.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>block)  <span class="co">#12 blocks</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+<div id="models" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Models<a href="module-5.html#models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This is a no block model:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="module-5.html#cb59-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(count<span class="sc">~</span>spray, <span class="at">data=</span>d)</span>
+<span id="cb59-2"><a href="module-5.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm1)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: count
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## spray      3 1648.73  549.58  26.478 6.091e-10 ***
+## Residuals 44  913.25   20.76                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>This is a block model (the block as a fixed effect).</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="module-5.html#cb61-1" aria-hidden="true" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(count<span class="sc">~</span>spray<span class="sc">+</span>block, <span class="at">data=</span>d)</span>
+<span id="cb61-2"><a href="module-5.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm2)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: count
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## spray      3 1648.73  549.58 32.5298 5.685e-10 ***
+## block     11  355.73   32.34  1.9142   0.07378 .  
+## Residuals 33  557.52   16.89                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="blocks-as-random-effects" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Blocks as Random Effects<a href="module-5.html#blocks-as-random-effects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We need to load additional packages for this section</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="module-5.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code></pre></div>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     expand, pack, unpack</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="module-5.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;lmerTest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:lme4&#39;:
+## 
+##     lmer</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     step</code></pre>
+<p>Here we set up a linear mixed effect model with a block as a random effect (random intercept):</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="module-5.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># block as random effect</span></span>
+<span id="cb71-2"><a href="module-5.html#cb71-2" aria-hidden="true" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(count<span class="sc">~</span>spray<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>block), <span class="at">data=</span>d)</span>
+<span id="cb71-3"><a href="module-5.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm3)</span></code></pre></div>
+<pre><code>## Type III Analysis of Variance Table with Satterthwaite&#39;s method
+##       Sum Sq Mean Sq NumDF DenDF F value    Pr(&gt;F)    
+## spray 1648.7  549.58     3    33   32.53 5.685e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Now let’s compare the model for blocks as fixed vs. random effects:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="module-5.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compare summary() for fixed vs. random blocking effect</span></span>
+<span id="cb73-2"><a href="module-5.html#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = count ~ spray + block, data = d)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.6875 -1.6250 -0.1458  1.6458  7.9792 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  10.3542     2.2977   4.506 7.84e-05 ***
+## sprayB        0.8333     1.6780   0.497  0.62275    
+## sprayC      -12.4167     1.6780  -7.400 1.68e-08 ***
+## sprayF        2.1667     1.6780   1.291  0.20561    
+## block2        0.5000     2.9064   0.172  0.86446    
+## block3        7.7500     2.9064   2.667  0.01178 *  
+## block4        4.2500     2.9064   1.462  0.15312    
+## block5        4.0000     2.9064   1.376  0.17801    
+## block6        2.7500     2.9064   0.946  0.35093    
+## block7        2.5000     2.9064   0.860  0.39590    
+## block8        4.7500     2.9064   1.634  0.11170    
+## block9        8.2500     2.9064   2.839  0.00770 ** 
+## block10       8.7500     2.9064   3.011  0.00497 ** 
+## block11       3.5000     2.9064   1.204  0.23707    
+## block12       2.7500     2.9064   0.946  0.35093    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.11 on 33 degrees of freedom
+## Multiple R-squared:  0.7824, Adjusted R-squared:  0.6901 
+## F-statistic: 8.475 on 14 and 33 DF,  p-value: 2.595e-07</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="module-5.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: count ~ spray + (1 | block)
+##    Data: d
+## 
+## REML criterion at convergence: 266.3
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.95239 -0.58269 -0.07399  0.60466  1.99778 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  block    (Intercept)  3.861   1.965   
+##  Residual             16.895   4.110   
+## Number of obs: 48, groups:  block, 12
+## 
+## Fixed effects:
+##             Estimate Std. Error       df t value Pr(&gt;|t|)    
+## (Intercept)  14.5000     1.3152  39.8617  11.025 1.13e-13 ***
+## sprayB        0.8333     1.6780  33.0000   0.497    0.623    
+## sprayC      -12.4167     1.6780  33.0000  -7.400 1.68e-08 ***
+## sprayF        2.1667     1.6780  33.0000   1.291    0.206    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##        (Intr) sprayB sprayC
+## sprayB -0.638              
+## sprayC -0.638  0.500       
+## sprayF -0.638  0.500  0.500</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="module-5.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm3)    <span class="do">## prints model coefficients</span></span></code></pre></div>
+<pre><code>## $block
+##    (Intercept)    sprayB    sprayC   sprayF
+## 1     12.52004 0.8333333 -12.41667 2.166667
+## 2     12.75883 0.8333333 -12.41667 2.166667
+## 3     16.22128 0.8333333 -12.41667 2.166667
+## 4     14.54975 0.8333333 -12.41667 2.166667
+## 5     14.43035 0.8333333 -12.41667 2.166667
+## 6     13.83338 0.8333333 -12.41667 2.166667
+## 7     13.71398 0.8333333 -12.41667 2.166667
+## 8     14.78854 0.8333333 -12.41667 2.166667
+## 9     16.46007 0.8333333 -12.41667 2.166667
+## 10    16.69885 0.8333333 -12.41667 2.166667
+## 11    14.19156 0.8333333 -12.41667 2.166667
+## 12    13.83338 0.8333333 -12.41667 2.166667
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;coef.mer&quot;</code></pre>
+<p>We can also print out the variance components from the model:</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="module-5.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">VarCorr</span>(lm3), <span class="at">comp=</span><span class="fu">c</span>(<span class="st">&quot;Variance&quot;</span>))  <span class="do">## print variance components from model</span></span></code></pre></div>
+<pre><code>##  Groups   Name        Variance
+##  block    (Intercept)  3.8611 
+##  Residual             16.8946</code></pre>
+<p>Let’s check residuals:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="module-5.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm1<span class="sc">$</span>residuals<span class="sc">~</span>lm1<span class="sc">$</span>fitted.values) <span class="co"># check residuals of no block and block models</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="module-5.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(lm3)<span class="sc">~</span><span class="fu">fitted</span>(lm3))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-2.png" width="672" /></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="module-5.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(lm1<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-3.png" width="672" /></p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="module-5.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">resid</span>(lm3))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-4.png" width="672" /></p>
+<p>Finally, we can compare estimated marginal means:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="module-5.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm2, pairwise<span class="sc">~</span>spray) <span class="do">## fixed effect block</span></span></code></pre></div>
+<pre><code>## $emmeans
+##  spray emmean   SE df lower.CL upper.CL
+##  A      14.50 1.19 33   12.086     16.9
+##  B      15.33 1.19 33   12.919     17.7
+##  C       2.08 1.19 33   -0.331      4.5
+##  F      16.67 1.19 33   14.253     19.1
+## 
+## Results are averaged over the levels of: block 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast estimate   SE df t.ratio p.value
+##  A - B      -0.833 1.68 33  -0.497  0.9593
+##  A - C      12.417 1.68 33   7.400  &lt;.0001
+##  A - F      -2.167 1.68 33  -1.291  0.5749
+##  B - C      13.250 1.68 33   7.896  &lt;.0001
+##  B - F      -1.333 1.68 33  -0.795  0.8564
+##  C - F     -14.583 1.68 33  -8.691  &lt;.0001
+## 
+## Results are averaged over the levels of: block 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="module-5.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm3, pairwise<span class="sc">~</span>spray) <span class="do">## random effect block</span></span></code></pre></div>
+<pre><code>## $emmeans
+##  spray emmean   SE   df lower.CL upper.CL
+##  A      14.50 1.32 39.9   11.842    17.16
+##  B      15.33 1.32 39.9   12.675    17.99
+##  C       2.08 1.32 39.9   -0.575     4.74
+##  F      16.67 1.32 39.9   14.008    19.32
+## 
+## Degrees-of-freedom method: kenward-roger 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast estimate   SE df t.ratio p.value
+##  A - B      -0.833 1.68 33  -0.497  0.9593
+##  A - C      12.417 1.68 33   7.400  &lt;.0001
+##  A - F      -2.167 1.68 33  -1.291  0.5749
+##  B - C      13.250 1.68 33   7.896  &lt;.0001
+##  B - F      -1.333 1.68 33  -0.795  0.8564
+##  C - F     -14.583 1.68 33  -8.691  &lt;.0001
+## 
+## Degrees-of-freedom method: kenward-roger 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-4.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-Module_5.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

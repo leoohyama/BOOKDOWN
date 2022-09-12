@@ -1,0 +1,489 @@
+# Module 3
+
+## 3A. Data Management
+
+We will practice plotting data using the iris dataset.
+
+```{r}
+data(iris) # load data (already exists in base R)
+```
+
+```{r}
+head(iris) # print first 6 lines of dataset
+tail(iris) # print last 6 lines of dataset
+```
+
+```{r}
+str(iris) # print 'structure' of dataset giving you info about each column
+```
+
+### Making and modifying variables
+
+Here's how we make a new column that is a unique number:
+```{r}
+iris$Plant <- 1:length(iris$Species)
+```
+
+Here's how we make a new column that is total petal and sepal length:
+```{r}
+iris$PetSep.Length <- iris$Petal.Length+iris$Sepal.Length
+```
+
+Here's how to make a new column that log-transforms PetSep.Length:
+```{r}
+iris$lnPS.Len <- log(iris$PetSep.Length)
+```
+
+Here's how to make a new column for 'genus'. The only values you want is "Iris":
+```{r}
+iris$Genus <- 'Iris'
+```
+
+Here's how to combine two columns:
+```{r}
+iris$GenSpp <- paste(iris$Genus, iris$Species, sep="_")
+```
+
+Here's how to change Species 'versicolor' to 'versi' in the GenSpp column:
+```{r}
+iris$GenSpp <- gsub('versicolor', 'versi', iris$GenSpp )  ## looks for 'versicolor' and replaces it with 'versi' in the column iris$Species
+```
+
+sub() can be used for replacement but will only do 1 replacement and gsub() can also be used for replacement but with all matching instances.
+
+You can use gsub() to add genus name to species column (alternative to making new column and then pasting together).
+```{r}
+iris$GenSpp1 <- gsub('.*^', 'Iris_', iris$Species)
+```
+
+
+### Variables with the tidyverse
+
+```{r}
+library(tidyverse)      # load package tidyverse (install if needed)
+library(viridis)
+data(iris)               # reload iris to clear changes from above
+iris1 <- as_tibble(iris) # load iris and convert to tibble
+```
+
+```{r}
+glimpse(iris1)     ## similar to str(), just glimpses data
+```
+
+mutate() will allow you create and modify variables:
+```{r}
+iris1 <- iris1 %>% mutate(Plant=1:length(Species), 
+                          PetSep.Length=Petal.Length+Sepal.Length, 
+                          lnPS.Len=log(PetSep.Length), 
+                          Genus='Iris', 
+                          GenSpp=gsub('.*^', 'Iris_', Species)) 
+        ## note that I am overwriting iris1. Use with caution
+```
+
+summarize() calculates means, sd, min, max, etc. on a dataset:
+```{r}
+iris1 %>% summarize(mean(Petal.Length))  ## mean of Petal.Length in dplyr
+```
+
+```{r}
+mean(iris1$Petal.Length) ## mean of Petal.Length in base R
+```
+
+Here we summarize lnPS.Len by Species with both Tidyverse and base R:
+```{r}
+means_PetLen1 <- iris1 %>% group_by(Species) %>%
+  summarize(Petal.Length=mean(Petal.Length)) ## tidy code
+```
+
+```{r}
+means_PetLen2 <- aggregate(Petal.Length~Species, FUN="mean", data=iris1) ## base R
+```
+
+Here we summarize multiple variables by species use summarize_all():
+```{r}
+means1 <- iris1 %>% 
+  select(Sepal.Length, Sepal.Width, Petal.Length,
+         Petal.Width,lnPS.Len, Species) %>%  
+  group_by(Species) %>% 
+  summarize_all(list(mean=mean,sd=sd,n=length))
+means1
+```
+
+### Reshape data for better usability 
+
+Here is how we reshape data from wide to long:
+```{r}
+iris_long <- iris1 %>% group_by(Species) %>% 
+  pivot_longer(cols=c(Sepal.Length, Sepal.Width, Petal.Length,
+                      Petal.Width, lnPS.Len), 
+               names_to = 'Trait', 
+               values_to = 'value')
+head(iris_long)
+```
+
+We can calculate the mean, sd, and n for each Species by trait combination and then calculate the standard error (se):
+```{r}
+means2 <- iris_long %>% 
+  group_by(Species,Trait) %>% 
+  summarize(mean=mean(value), 
+            sd=sd(value), 
+            n=length(value)) %>% 
+  mutate(se=sd/sqrt(n)) %>%
+  filter(Trait!='lnPS.Len')
+head(means2)
+```
+
+Note that the previous code could all be done in one piped command:
+```{r}
+means2a <- iris1 %>% 
+  group_by(Species) %>% 
+  pivot_longer(cols=c(Sepal.Length, Sepal.Width, Petal.Length,
+                      Petal.Width, lnPS.Len), names_to = 'Trait',
+               values_to = 'value') %>% 
+  group_by(Species,Trait) %>% 
+  summarize(mean=mean(value), 
+            sd=sd(value),
+            n=length(value)) %>% 
+  mutate(se=sd/sqrt(n)) %>%
+  filter(Trait!='lnPS.Len')
+means2a
+```
+
+We can make a plot, below are two plots to start with. One is ineffective and one is more effective.
+```{r}
+ggplot(data=means2, aes(x=Species, y=mean, fill=Trait)) + 
+  geom_point(size=5, position=position_dodge(width=0.25), pch=22) +
+  labs(y="Floral part measurement (mm)") +
+  geom_errorbar(aes(ymin=(mean-sd), ymax=(mean+sd)), width=.2,
+                position=position_dodge(width=0.25), lwd=1.5) +
+  scale_fill_viridis(discrete = T, 
+                     labels=c("Petal Length","Petal Width",
+                              "Sepal Length", "Sepal Width"),
+                     option="magma") +
+  theme(panel.border=element_rect(color="black",size=2, fill=NA)) +
+  xlab("Species")
+```
+
+```{r}
+ggplot(data=iris_long %>% 
+         filter(Trait!='lnPS.Len'), aes(x=Species, 
+                                        y=value, 
+                                        fill=Species)) + 
+  geom_boxplot() + 
+  facet_wrap(~Trait, scales = 'free_y') +
+  labs(y="Floral part measurement (mm)") +
+  scale_fill_viridis(discrete = T, 
+                     option = "plasma", 
+                     direction = -1, begin=.2) +
+  theme_bw()
+```
+
+We are still using the Iris data set as well as the tidyverse.
+```{r}
+library(tidyverse)
+library(viridis)
+iris1 <- as_tibble(iris) # load iris and convert to tibble
+```
+
+Here we make plot of sepal.length by sepal.width in wide format:
+```{r}
+ggplot(data=iris1, aes(x=Sepal.Width, y=Sepal.Length)) + 
+  geom_point(color="#39568CFF") +   ## color outside of aes() changes color of all points (ie. not mapped to a column)
+  facet_wrap(~Species) +
+  geom_smooth(method='lm',color="#39568CFF", fill="#39568CFF")+
+  theme_bw()
+```
+
+We can reshape data for for comparing traits in different panels:
+```{r}
+### reshape data from wide to long
+iris_long <- iris1 %>% group_by(Species) %>% 
+  pivot_longer(cols=c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width), names_to = 'Trait', values_to = 'value')
+head(iris_long)
+```
+
+Now we make a plot comparing species with traits on different panels:
+```{r}
+ggplot(data=iris_long , aes(x=Species, y=value, fill=Species)) + 
+  geom_boxplot() + 
+  facet_wrap(~Trait, scales = 'free_y') +
+  labs(y="Floral part measurement (mm)") +
+  scale_fill_viridis(discrete = T, 
+                     option = "plasma", 
+                     direction = -1) +
+  theme_bw()
+```
+
+## 3B. Data Exploration
+
+For data exploration we need to load the following libraries:
+```{r}
+library(tidyverse) 
+library(agridat)
+library(corrplot) 
+library(EnvStats) 
+```
+
+We will use the Iris dataset.
+```{r}
+data(iris) # load data (already exists in base R)
+iris[8,3] <- 7 # plant data point for demo
+head(iris) # print first 6 lines of dataset
+tail(iris) # print last 6 lines of dataset
+```
+
+Here we use str() to print the 'structure' of dataset giving you info about each column or we can use glimpse().
+```{r}
+str(iris)
+```
+```{r}
+glimpse(iris) # glimpse is similar to str() in tidyverse
+```
+
+### Distributions & summary statistics
+
+We can view histograms of petal lengths with this:
+```{r}
+ggplot(iris, aes(x = Petal.Length)) + 
+  geom_histogram(bins=12, color="white") +
+  theme_bw(base_size = 16) +
+  geom_vline(aes(xintercept = mean(Petal.Length)),
+             color = "blue",
+             size = 2) +
+  geom_vline(aes(xintercept= median(Petal.Length)), 
+             color = "orange", 
+             size = 2)
+```
+The vertical lines above represent the mean and median values.
+
+We can also facet the histograms:
+```{r}
+ggplot(iris, aes(x = Petal.Length)) + 
+  geom_histogram(bins=12, color="white") + 
+  facet_wrap(~Species, scales="free") + 
+  theme_bw(base_size = 16)
+
+```
+
+We can use summary() to examine mean, median, and ranges:
+```{r}
+summary(iris)
+```
+
+We can also get a table of means and medians with this tidyverse code:
+```{r}
+iris %>%
+  pivot_longer(cols=c(1:4)) %>% 
+  group_by(Species,name) %>% 
+  summarize(mean=mean(value),median=median(value)) 
+```
+
+### Examining for outliers 
+
+Boxplots can be used to examine distribution and look for outliers:
+```{r}
+ggplot(iris, aes(x=Species, y = Petal.Length)) + 
+  geom_boxplot(fill="grey", width=.5) + 
+  facet_wrap(~Species, scales="free") + 
+  theme_bw(base_size = 16)
+```
+
+We can  use a dixon test for outliers or other tests like the grubbs test or Rosner test (for multiple outliers):
+```{r}
+library(outliers)
+```
+
+```{r}
+## grubbs test for outliers, highest then lowest. Other functions EnvStats::rosnerTest() can test for multiple outliers
+grubbs.test(iris$Petal.Length) ## full dataset
+grubbs.test(iris$Petal.Length[iris$Species=='setosa']) ## just species setosa
+grubbs.test(iris$Petal.Length[iris$Species=='setosa'], opposite=T) ## test lower outlier for species setosa
+```
+
+Here we can remove outliers and remake boxplots. Filtering with "|" (OR) will select all observations where one condition is met but not the other. 
+```{r}
+iris1 <- iris %>% filter(Petal.Length<4 | !Species=='setosa')
+```
+
+Plotting data:
+```{r}
+ggplot(iris1, aes(x=Species, y = Petal.Length)) + 
+  geom_boxplot(fill="grey", width=.5) + 
+  facet_wrap(~Species, scales="free") + 
+  theme_bw(base_size = 16)
+```
+
+### Explore relationships
+
+We can first use the GGally package. The ggpairs() code provides us with scatter plots that plot variables against one another in a pairwise fashion. We also see the distribution of the data and the correlation coefficients between a pair of variables
+
+```{r}
+library(GGally) ## install and load GGally package, if necessary
+```
+
+```{r}
+ggpairs(iris1)   ## Make a big panel plot for exploration!!!
+ggpairs(iris1, aes(color=Species, alpha=.75)) ## add color to seperate by species
+```
+
+Alternative to ggpairs() is the cor() which can be better for quickly scanning complex datasets:
+```{r}
+iris_cor <- cor(iris1 %>% select(-Species) %>% as.matrix()) ## first make correlation matrix
+corrplot(iris_cor, method = "circle", type = "upper") ## plots strength of correlation as color-coded circles
+
+```
+
+## 3C. Model Selection
+
+This section will include a quick overview on how to rank models based on AIC (Akaike Information Criterion). For this we need to load a few libraries:
+
+```{r}
+library(bbmle)
+```
+
+### Quick introduction
+
+Model selection is the process in choosing a statistical model from a set of models given your data. Keep in mind that model selection can get messy and its implementation (including approaches and methods) is often debated. Model selection can be used in the context of exploration, inference, and prediction. For today's section we focus an inferential approach with AIC.
+
+### Basic calculations
+
+AIC was developed by Hirotogu Akaike and is a metric of relative model quality for a given set of data.
+
+AIC is calculated using the following formula:
+$$
+AIC = -2 * ln(model\ likelihood) + 2K
+$$
+K = number of parameters in the model
+
+* Note: your data and your response variable have to be the same for AIC selection!
+
+We can manually calculate AIC in R. Let's do this with an example dataset:
+
+```{r}
+data(mtcars)
+```
+
+Let's run a regression:
+```{r}
+m1<-lm(data = mtcars, mpg ~ hp)
+```
+
+Now that we ran the model let's calculate the AIC by hand:
+```{r}
+AIC = 2*logLik(m1) -2* 3
+AIC[1]
+```
+
+* Note: K = 3 in this case because the model 'm1' has 3 degrees of freedom which can be checked when running the logLik() as seen here:
+```{r}
+logLik(m1)
+```
+
+Now let's see what the regular AIC() gives us:
+```{r}
+AIC(m1)
+```
+
+Looks like our calculations are the same! 
+
+So why use AIC? The lectures that follow along this section provides more detail but to quickly sum it up:
+1. AIC is commonly used and accepted
+
+2. Works well within a multiple competing hypothesis framework
+
+3. A step forward in getting away from the p-value problem
+
+
+### AICc
+Small sample sizes can bias AIC to select for models with too many parameters. To account for this AICc (Akaike Information Criterion Corrected for Small Sample Sizes)  was developed and the equation for that goes as follows:
+
+$$
+AICc = AIC + \frac{2K^2 + 2K}{n - K -1}
+$$
+Where:
+
+n = sample size 
+
+K = no. of parameters
+
+### Case study with AIC
+
+Let's load in some beetle size data:
+
+```{r}
+df<-readRDS("size_data.rds")
+library(viridis)
+```
+
+This data includes global coverage of average beetle sizes (geo_avg). The cell number represents an individual hexagonal bin and within each bin the average beetle size (based on species lists), average temperature (MAT), temperature range (ATR), and net primary productivity (NPP_men) was calculated.
+
+```{r}
+glimpse(df)
+```
+If we wanted to plot the data to show the average beetle size across the planet it would like this:
+
+```{r, message=F, echo=F, fig.align="center"}
+knitr::include_graphics("./Picture1.png")
+```
+
+It seems like there's a weak but detectable trend of larger sized assemblages in northern/temperate areas. Although the continent of Australia really pops up as well.
+
+What could be causing this pattern? Based on the literature there are several hypotheses we could test with models and AIC! They are as follows:
+
+1. Larger assemblages are just an artifact of undersampling. Sampling is more extensive in North America and Europe and therefore, size is simply a function of sampling. A proxy to measure sampling could be species richness.
+```{r}
+sample<-lm(log(geo_avg) ~ SR, data = df)
+```
+
+2. Areas that experience harsher environments (larger ranges in temperature) likely have larger sized organisms that can weather such conditions.
+```{r}
+seasonality<-lm(log(geo_avg) ~ ATR, data = df)
+```
+
+3. Areas that are colder have larger organisms due to thermoregulatory properties where larger organisms are able to trap and effectively conserve heat. 
+```{r}
+TEMP<-lm(log(geo_avg) ~ MAT, data = df)
+```
+
+4. Resource availability. Organisms can grow larger in resource rich areas.
+```{r}
+NPP<-lm(log(geo_avg) ~ NPP_men, data = df)
+```
+
+5. Finally, there could be no statistical pattern and therefore there is no effect on size i.e. a statistical null.
+```{r}
+nullm<-lm(log(geo_avg) ~ 1, data = df)
+```
+
+Now let's calculate the AIC scores of the models:
+```{r}
+bbmle::AICtab(sample, seasonality, TEMP, NPP, nullm, weights = T, 
+              delta = T, base = T)
+```
+The seasonality hypothesis seems like the best or most likely model while the null and the sampling effect models show the least support. We also see that the next closest model is the temperature model but is beyond a $\Delta$ AIC difference of 2. All in all we show strong support for the seasonality hypothesis.
+
+We also see another metric labelled as "weight". The AIC weight represents the probability that the model is best from the set of competing models and it's another metric that can be used to assess models other than raw AIC scores.
+
+We can make a nice plot with this data along a seasonality axis:
+```{r, warning=FALSE}
+ggplot(data = df) +
+  geom_point(aes(x = ATR, y = geo_avg, fill = log(SR)),
+             pch = 21,
+             size = 5,
+             color = 'grey',
+             alpha = 0.8) +
+  geom_rug(aes(x = ATR, y = geo_avg)) +
+  scale_fill_viridis_c() +
+  scale_y_log10() +
+  labs(x = "Annual Temp. Range",
+       y = "Size", fill = "Log(SR)") +
+  geom_smooth(aes(x = ATR, y = geo_avg), method = "lm",
+              color = "black") +
+  ylim(c(0, 2)) +
+  theme_minimal() +
+  theme(axis.title = element_text(size = 22, face = 'bold'),
+        legend.title = element_text(size = 15, face = 'bold'),
+        legend.position = "top") 
+
+```
+

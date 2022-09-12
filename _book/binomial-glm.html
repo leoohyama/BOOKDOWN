@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Binomial GLM | Module 4</title>
+  <meta name="description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Binomial GLM | Module 4" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Binomial GLM | Module 4" />
+  
+  <meta name="twitter:description" content="<p>This is a trial run of putting out a book for a stats class.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Leo_Ohyama" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="overdispersion.html"/>
+<link rel="next" href="module-5.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistics in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like <span>https://bookdown.org/yihui/bookdown</span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="module-2.html"><a href="module-2.html"><i class="fa fa-check"></i><b>2</b> Module 2</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="module-2.html"><a href="module-2.html#a.-introduction-to-data-visualization"><i class="fa fa-check"></i><b>2.1</b> 2A. Introduction to Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="module-2.html"><a href="module-2.html#continuous-variables"><i class="fa fa-check"></i><b>2.1.1</b> Continuous Variables</a></li>
+<li class="chapter" data-level="2.1.2" data-path="module-2.html"><a href="module-2.html#fancy-scatterplots"><i class="fa fa-check"></i><b>2.1.2</b> Fancy Scatterplots</a></li>
+<li class="chapter" data-level="2.1.3" data-path="module-2.html"><a href="module-2.html#continuous-variables-1"><i class="fa fa-check"></i><b>2.1.3</b> Continuous Variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="module-2.html"><a href="module-2.html#different-types-of-plots-for-categorical-data-with-ggplot2"><i class="fa fa-check"></i><b>2.1.4</b> Different types of plots for categorical data with ggplot2</a></li>
+<li class="chapter" data-level="2.1.5" data-path="module-2.html"><a href="module-2.html#breakout-group-challenge"><i class="fa fa-check"></i><b>2.1.5</b> Breakout group challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="module-2.html"><a href="module-2.html#b.-introduction-to-regression"><i class="fa fa-check"></i><b>2.2</b> 2B. Introduction to Regression</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="module-2.html"><a href="module-2.html#an-example-of-linear-regression-in-r"><i class="fa fa-check"></i><b>2.2.1</b> An Example of Linear Regression in R</a></li>
+<li class="chapter" data-level="2.2.2" data-path="module-2.html"><a href="module-2.html#regression-challenge"><i class="fa fa-check"></i><b>2.2.2</b> Regression Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="module-2.html"><a href="module-2.html#c.-introduction-to-anova"><i class="fa fa-check"></i><b>2.3</b> 2C. Introduction to ANOVA</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="module-2.html"><a href="module-2.html#example-of-a-one-way-anova-in-r"><i class="fa fa-check"></i><b>2.3.1</b> Example of a one-way ANOVA in R</a></li>
+<li class="chapter" data-level="2.3.2" data-path="module-2.html"><a href="module-2.html#anova-challenge"><i class="fa fa-check"></i><b>2.3.2</b> ANOVA Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="module-2.html"><a href="module-2.html#extra-data-visualization"><i class="fa fa-check"></i><b>2.4</b> Extra Data Visualization</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="module-2.html"><a href="module-2.html#adding-averages-to-plots-part-2"><i class="fa fa-check"></i><b>2.4.1</b> Adding averages to plots part 2</a></li>
+<li class="chapter" data-level="2.4.2" data-path="module-2.html"><a href="module-2.html#r-challenge"><i class="fa fa-check"></i><b>2.4.2</b> R Challenge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="module-3.html"><a href="module-3.html"><i class="fa fa-check"></i><b>3</b> Module 3</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="module-3.html"><a href="module-3.html#a.-data-management"><i class="fa fa-check"></i><b>3.1</b> 3A. Data Management</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="module-3.html"><a href="module-3.html#making-and-modifying-variables"><i class="fa fa-check"></i><b>3.1.1</b> Making and modifying variables</a></li>
+<li class="chapter" data-level="3.1.2" data-path="module-3.html"><a href="module-3.html#variables-with-the-tidyverse"><i class="fa fa-check"></i><b>3.1.2</b> Variables with the tidyverse</a></li>
+<li class="chapter" data-level="3.1.3" data-path="module-3.html"><a href="module-3.html#reshape-data-for-better-usability"><i class="fa fa-check"></i><b>3.1.3</b> Reshape data for better usability</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="module-3.html"><a href="module-3.html#b.-data-exploration"><i class="fa fa-check"></i><b>3.2</b> 3B. Data Exploration</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="module-3.html"><a href="module-3.html#distributions-summary-statistics"><i class="fa fa-check"></i><b>3.2.1</b> Distributions &amp; summary statistics</a></li>
+<li class="chapter" data-level="3.2.2" data-path="module-3.html"><a href="module-3.html#examining-for-outliers"><i class="fa fa-check"></i><b>3.2.2</b> Examining for outliers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="module-3.html"><a href="module-3.html#explore-relationships"><i class="fa fa-check"></i><b>3.2.3</b> Explore relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="module-3.html"><a href="module-3.html#c.-model-selection"><i class="fa fa-check"></i><b>3.3</b> 3C. Model Selection</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="module-3.html"><a href="module-3.html#quick-introduction"><i class="fa fa-check"></i><b>3.3.1</b> Quick introduction</a></li>
+<li class="chapter" data-level="3.3.2" data-path="module-3.html"><a href="module-3.html#basic-calculations"><i class="fa fa-check"></i><b>3.3.2</b> Basic calculations</a></li>
+<li class="chapter" data-level="3.3.3" data-path="module-3.html"><a href="module-3.html#aicc"><i class="fa fa-check"></i><b>3.3.3</b> AICc</a></li>
+<li class="chapter" data-level="3.3.4" data-path="module-3.html"><a href="module-3.html#case-study-with-aic"><i class="fa fa-check"></i><b>3.3.4</b> Case study with AIC</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="module-4.html"><a href="module-4.html"><i class="fa fa-check"></i><b>4</b> Module 4</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="module-4.html"><a href="module-4.html#a.-generalized-models"><i class="fa fa-check"></i><b>4.1</b> 4A. Generalized Models</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="module-4.html"><a href="module-4.html#example-conducting-a-one-way-anova-with-non-normal-data"><i class="fa fa-check"></i><b>4.1.1</b> Example: Conducting a one-way ANOVA with non-normal data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="module-4.html"><a href="module-4.html#log-linear-model"><i class="fa fa-check"></i><b>4.1.2</b> Log-linear model</a></li>
+<li class="chapter" data-level="4.1.3" data-path="module-4.html"><a href="module-4.html#generalized-linear-models"><i class="fa fa-check"></i><b>4.1.3</b> Generalized linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="module-4.html"><a href="module-4.html#b.-overdispersion"><i class="fa fa-check"></i><b>4.2</b> 4B. Overdispersion</a></li>
+<li class="chapter" data-level="4.3" data-path="module-4.html"><a href="module-4.html#c.-binomial-glm"><i class="fa fa-check"></i><b>4.3</b> 4C. Binomial GLM</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="generalized-models.html"><a href="generalized-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="generalized-models.html"><a href="generalized-models.html#example-conducting-a-one-way-anova-with-non-normal-data-1"><i class="fa fa-check"></i><b>5.1</b> Example: Conducting a one-way ANOVA with non-normal data</a></li>
+<li class="chapter" data-level="5.2" data-path="generalized-models.html"><a href="generalized-models.html#log-linear-model-1"><i class="fa fa-check"></i><b>5.2</b> Log-linear model</a></li>
+<li class="chapter" data-level="5.3" data-path="generalized-models.html"><a href="generalized-models.html#generalized-linear-models-1"><i class="fa fa-check"></i><b>5.3</b> Generalized linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="overdispersion.html"><a href="overdispersion.html"><i class="fa fa-check"></i><b>6</b> Overdispersion</a></li>
+<li class="chapter" data-level="7" data-path="binomial-glm.html"><a href="binomial-glm.html"><i class="fa fa-check"></i><b>7</b> Binomial GLM</a></li>
+<li class="chapter" data-level="8" data-path="module-5.html"><a href="module-5.html"><i class="fa fa-check"></i><b>8</b> Module 5</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="module-5.html"><a href="module-5.html#a.-ancovas-in-r"><i class="fa fa-check"></i><b>8.1</b> 5A. ANCOVAs in R</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="module-5.html"><a href="module-5.html#ancova-multiple-intercept-model"><i class="fa fa-check"></i><b>8.1.1</b> ANCOVA: multiple intercept model</a></li>
+<li class="chapter" data-level="8.1.2" data-path="module-5.html"><a href="module-5.html#ancova-multiple-intercept-and-slope-model"><i class="fa fa-check"></i><b>8.1.2</b> ANCOVA: multiple intercept AND slope model</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="module-5.html"><a href="module-5.html#b.-block-designs"><i class="fa fa-check"></i><b>8.2</b> 5B. Block Designs</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="module-5.html"><a href="module-5.html#data-and-plotting"><i class="fa fa-check"></i><b>8.2.1</b> Data and Plotting</a></li>
+<li class="chapter" data-level="8.2.2" data-path="module-5.html"><a href="module-5.html#models"><i class="fa fa-check"></i><b>8.2.2</b> Models</a></li>
+<li class="chapter" data-level="8.2.3" data-path="module-5.html"><a href="module-5.html#blocks-as-random-effects"><i class="fa fa-check"></i><b>8.2.3</b> Blocks as Random Effects</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Module 4</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="binomial-glm" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Binomial GLM<a href="binomial-glm.html#binomial-glm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this section we will run a GLM with a binomial error distribution. We load the following packages:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="binomial-glm.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb191-2"><a href="binomial-glm.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb191-3"><a href="binomial-glm.html#cb191-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb191-4"><a href="binomial-glm.html#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agridat)</span>
+<span id="cb191-5"><a href="binomial-glm.html#cb191-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DHARMa)</span></code></pre></div>
+<p>We will use the Titanic survival dataset for the binomial GLM.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="binomial-glm.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="do">## LOAD TITANIC SURVIVAL DATASET</span></span>
+<span id="cb192-2"><a href="binomial-glm.html#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;TitanicSurvival&quot;</span>)</span>
+<span id="cb192-3"><a href="binomial-glm.html#cb192-3" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> TitanicSurvival <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age<span class="sc">&gt;</span><span class="dv">17</span>) <span class="co"># filter out children</span></span>
+<span id="cb192-4"><a href="binomial-glm.html#cb192-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(t1)</span></code></pre></div>
+<pre><code>##                                 survived    sex age passengerClass
+## Allen, Miss. Elisabeth Walton        yes female  29            1st
+## Allison, Mr. Hudson Joshua Crei       no   male  30            1st
+## Allison, Mrs. Hudson J C (Bessi       no female  25            1st
+## Anderson, Mr. Harry                  yes   male  48            1st
+## Andrews, Miss. Kornelia Theodos      yes female  63            1st
+## Andrews, Mr. Thomas Jr                no   male  39            1st</code></pre>
+<p>Let’s quickly plot the data:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="binomial-glm.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(t1, <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>survived, <span class="at">color=</span>sex)) <span class="sc">+</span></span>
+<span id="cb194-2"><a href="binomial-glm.html#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span>.<span class="dv">2</span>, <span class="at">width=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Now we can construct a GLM to estimate survival as a function of sex and passengerClass while include Age as co-variate.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="binomial-glm.html#cb195-1" aria-hidden="true" tabindex="-1"></a>tglm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survived <span class="sc">~</span> sex <span class="sc">*</span> passengerClass <span class="sc">+</span> age, <span class="at">data=</span>t1, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<p>Let’s look at the summary of the model:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="binomial-glm.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="do">## print off anova table</span></span>
+<span id="cb196-2"><a href="binomial-glm.html#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(tglm1)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II tests)
+## 
+## Response: survived
+##                    LR Chisq Df Pr(&gt;Chisq)    
+## sex                 270.225  1  &lt; 2.2e-16 ***
+## passengerClass       85.841  2  &lt; 2.2e-16 ***
+## age                   8.419  1   0.003714 ** 
+## sex:passengerClass   48.354  2  3.163e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="binomial-glm.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="do">## print off summary</span></span>
+<span id="cb198-2"><a href="binomial-glm.html#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tglm1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = survived ~ sex * passengerClass + age, family = binomial(link = &quot;logit&quot;), 
+##     data = t1)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.7672  -0.6349  -0.4503   0.4438   2.5268  
+## 
+## Coefficients:
+##                            Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                4.440409   0.637328   6.967 3.23e-12 ***
+## sexmale                   -4.105505   0.540235  -7.599 2.97e-14 ***
+## passengerClass2nd         -1.709631   0.609577  -2.805  0.00504 ** 
+## passengerClass3rd         -3.957654   0.562147  -7.040 1.92e-12 ***
+## age                       -0.025352   0.008945  -2.834  0.00459 ** 
+## sexmale:passengerClass2nd -0.203867   0.698880  -0.292  0.77051    
+## sexmale:passengerClass3rd  2.655924   0.597510   4.445 8.79e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1191.35  on 891  degrees of freedom
+## Residual deviance:  752.38  on 885  degrees of freedom
+## AIC: 766.38
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Now we can check residuals:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="binomial-glm.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">resid</span>(tglm1)) <span class="do">## residuals should be normally distributed, even for glm</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-92-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="binomial-glm.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(tglm1)<span class="sc">~</span><span class="fu">fitted</span>(tglm1)) <span class="sc">+</span>  <span class="do">## residuals should be evenly dispersed around 0 across the range of x&#39;s</span></span>
+<span id="cb201-2"><a href="binomial-glm.html#cb201-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)                               <span class="co"># funnel shapes or curvature is bad</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-92-2.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## integer(0)</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="binomial-glm.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(<span class="fu">resid</span>(tglm1))  <span class="do">## residuals should line up pretty closely to the blue line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-93-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>## Allison, Mrs. Hudson J C (Bessi              Harris, Mr. George 
+##                               3                             363</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="binomial-glm.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(tglm1) <span class="sc">~</span> t1<span class="sc">$</span>passengerClass)  <span class="do">## variances should be homogeneous for each group</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-93-2.png" width="960" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="binomial-glm.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="do">## simulate residuals</span></span>
+<span id="cb206-2"><a href="binomial-glm.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">simulateResiduals</span>(tglm1)) <span class="do">## plot simulated residuals</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-94-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="binomial-glm.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">simulateResiduals</span>(tglm1)) <span class="do">## histogram should be flat</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-94-2.png" width="960" style="display: block; margin: auto;" /></p>
+<p>To make sense of the model output let’s use the emmeans package:</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="binomial-glm.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(tglm1, pairwise <span class="sc">~</span> sex<span class="sc">:</span>passengerClass)</span></code></pre></div>
+<pre><code>## $emmeans
+##  sex    passengerClass emmean    SE  df asymp.LCL asymp.UCL
+##  female 1st             3.592 0.516 Inf     2.580    4.6034
+##  male   1st            -0.514 0.192 Inf    -0.890   -0.1371
+##  female 2nd             1.882 0.325 Inf     1.246    2.5183
+##  male   2nd            -2.427 0.303 Inf    -3.022   -1.8324
+##  female 3rd            -0.366 0.203 Inf    -0.764    0.0322
+##  male   3rd            -1.815 0.170 Inf    -2.149   -1.4814
+## 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast                estimate    SE  df z.ratio p.value
+##  female 1st - male 1st      4.106 0.540 Inf   7.599  &lt;.0001
+##  female 1st - female 2nd    1.710 0.610 Inf   2.805  0.0567
+##  female 1st - male 2nd      6.019 0.602 Inf   9.997  &lt;.0001
+##  female 1st - female 3rd    3.958 0.562 Inf   7.040  &lt;.0001
+##  female 1st - male 3rd      5.407 0.551 Inf   9.810  &lt;.0001
+##  male 1st - female 2nd     -2.396 0.377 Inf  -6.354  &lt;.0001
+##  male 1st - male 2nd        1.913 0.364 Inf   5.262  &lt;.0001
+##  male 1st - female 3rd     -0.148 0.291 Inf  -0.507  0.9959
+##  male 1st - male 3rd        1.302 0.270 Inf   4.826  &lt;.0001
+##  female 2nd - male 2nd      4.309 0.444 Inf   9.700  &lt;.0001
+##  female 2nd - female 3rd    2.248 0.383 Inf   5.872  &lt;.0001
+##  female 2nd - male 3rd      3.698 0.367 Inf  10.088  &lt;.0001
+##  male 2nd - female 3rd     -2.061 0.362 Inf  -5.699  &lt;.0001
+##  male 2nd - male 3rd       -0.612 0.344 Inf  -1.776  0.4812
+##  female 3rd - male 3rd      1.450 0.255 Inf   5.678  &lt;.0001
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 6 estimates</code></pre>
+<p>We can obtain back-transformed means:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="binomial-glm.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(tglm1, pairwise <span class="sc">~</span> sex<span class="sc">:</span>passengerClass, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)      <span class="do">## type= does contrasts before back-transforming (more appropriate!)</span></span></code></pre></div>
+<pre><code>## $emmeans
+##  sex    passengerClass   prob     SE  df asymp.LCL asymp.UCL
+##  female 1st            0.9732 0.0135 Inf    0.9296     0.990
+##  male   1st            0.3743 0.0450 Inf    0.2911     0.466
+##  female 2nd            0.8679 0.0372 Inf    0.7766     0.925
+##  male   2nd            0.0811 0.0226 Inf    0.0465     0.138
+##  female 3rd            0.4096 0.0491 Inf    0.3178     0.508
+##  male   3rd            0.1400 0.0205 Inf    0.1044     0.185
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the logit scale 
+## 
+## $contrasts
+##  contrast                odds.ratio       SE  df null z.ratio p.value
+##  female 1st / male 1st      60.6734  32.7779 Inf    1   7.599  &lt;.0001
+##  female 1st / female 2nd     5.5269   3.3691 Inf    1   2.805  0.0567
+##  female 1st / male 2nd     411.1685 247.5444 Inf    1   9.997  &lt;.0001
+##  female 1st / female 3rd    52.3344  29.4197 Inf    1   7.040  &lt;.0001
+##  female 1st / male 3rd     223.0141 122.9249 Inf    1   9.810  &lt;.0001
+##  male 1st / female 2nd       0.0911   0.0343 Inf    1  -6.354  &lt;.0001
+##  male 1st / male 2nd         6.7768   2.4645 Inf    1   5.262  &lt;.0001
+##  male 1st / female 3rd       0.8626   0.2514 Inf    1  -0.507  0.9959
+##  male 1st / male 3rd         3.6756   0.9915 Inf    1   4.826  &lt;.0001
+##  female 2nd / male 2nd      74.3937  33.0509 Inf    1   9.700  &lt;.0001
+##  female 2nd / female 3rd     9.4690   3.6250 Inf    1   5.872  &lt;.0001
+##  female 2nd / male 3rd      40.3505  14.7906 Inf    1  10.088  &lt;.0001
+##  male 2nd / female 3rd       0.1273   0.0460 Inf    1  -5.699  &lt;.0001
+##  male 2nd / male 3rd         0.5424   0.1868 Inf    1  -1.776  0.4812
+##  female 3rd / male 3rd       4.2613   1.0878 Inf    1   5.678  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 6 estimates 
+## Tests are performed on the log odds ratio scale</code></pre>
+<p>In order to plot we need to create new variable that is 0 or 1.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="binomial-glm.html#cb212-1" aria-hidden="true" tabindex="-1"></a>t1<span class="sc">$</span>surv <span class="ot">&lt;-</span> <span class="fu">if_else</span>(t1<span class="sc">$</span>survived<span class="sc">==</span><span class="st">&#39;yes&#39;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span></code></pre></div>
+<p>Now we can make a plot with regression lines:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="binomial-glm.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(t1, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>surv, <span class="at">color=</span>sex)) <span class="sc">+</span> </span>
+<span id="cb213-2"><a href="binomial-glm.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span>.<span class="dv">1</span>, <span class="at">width=</span><span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb213-3"><a href="binomial-glm.html#cb213-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb213-4"><a href="binomial-glm.html#cb213-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">method.args=</span><span class="fu">list</span>(<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>), </span>
+<span id="cb213-5"><a href="binomial-glm.html#cb213-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se=</span>F, <span class="at">lwd=</span><span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb213-6"><a href="binomial-glm.html#cb213-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>passengerClass) <span class="sc">+</span></span>
+<span id="cb213-7"><a href="binomial-glm.html#cb213-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">20</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-98-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>We can improve the aesthetics of the plot:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="binomial-glm.html#cb214-1" aria-hidden="true" tabindex="-1"></a>tm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tglm1, <span class="sc">~</span> sex<span class="sc">:</span>passengerClass, <span class="at">type=</span><span class="st">&quot;response&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb214-2"><a href="binomial-glm.html#cb214-2" aria-hidden="true" tabindex="-1"></a>cbPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>, <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)</span>
+<span id="cb214-3"><a href="binomial-glm.html#cb214-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-4"><a href="binomial-glm.html#cb214-4" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb214-5"><a href="binomial-glm.html#cb214-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span>t1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">&#39;female&#39;</span>),</span>
+<span id="cb214-6"><a href="binomial-glm.html#cb214-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>surv<span class="fl">+.01</span>),</span>
+<span id="cb214-7"><a href="binomial-glm.html#cb214-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">25</span>, <span class="at">size=</span><span class="dv">1</span>, </span>
+<span id="cb214-8"><a href="binomial-glm.html#cb214-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span>.<span class="dv">1</span>, <span class="at">color=</span><span class="st">&quot;#E69F00&quot;</span>) <span class="sc">+</span></span>
+<span id="cb214-9"><a href="binomial-glm.html#cb214-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span>t1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">&#39;male&#39;</span>), </span>
+<span id="cb214-10"><a href="binomial-glm.html#cb214-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>surv<span class="fl">-.01</span>), </span>
+<span id="cb214-11"><a href="binomial-glm.html#cb214-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span><span class="dv">0</span>, <span class="at">width=</span>.<span class="dv">25</span>, <span class="at">size=</span><span class="dv">1</span>, </span>
+<span id="cb214-12"><a href="binomial-glm.html#cb214-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span>.<span class="dv">1</span>, <span class="at">color=</span><span class="st">&quot;#56B4E9&quot;</span>) <span class="sc">+</span></span>
+<span id="cb214-13"><a href="binomial-glm.html#cb214-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>tm,</span>
+<span id="cb214-14"><a href="binomial-glm.html#cb214-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x=</span>passengerClass,</span>
+<span id="cb214-15"><a href="binomial-glm.html#cb214-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y=</span>prob, <span class="at">ymin=</span>(prob<span class="sc">-</span>SE), </span>
+<span id="cb214-16"><a href="binomial-glm.html#cb214-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax=</span>(prob<span class="sc">+</span>SE), <span class="at">color=</span>sex), </span>
+<span id="cb214-17"><a href="binomial-glm.html#cb214-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">width=</span>.<span class="dv">2</span>, <span class="at">lwd=</span><span class="fl">1.25</span>,</span>
+<span id="cb214-18"><a href="binomial-glm.html#cb214-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb214-19"><a href="binomial-glm.html#cb214-19" aria-hidden="true" tabindex="-1"></a>  <span class="do">## make bars thinner</span></span>
+<span id="cb214-20"><a href="binomial-glm.html#cb214-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>tm , </span>
+<span id="cb214-21"><a href="binomial-glm.html#cb214-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>prob, <span class="at">color=</span>sex), </span>
+<span id="cb214-22"><a href="binomial-glm.html#cb214-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">5</span>, </span>
+<span id="cb214-23"><a href="binomial-glm.html#cb214-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.5</span>)) <span class="sc">+</span> </span>
+<span id="cb214-24"><a href="binomial-glm.html#cb214-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">&#39;survival&#39;</span>, <span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb214-25"><a href="binomial-glm.html#cb214-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span>cbPalette) <span class="sc">+</span></span>
+<span id="cb214-26"><a href="binomial-glm.html#cb214-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>(),                           </span>
+<span id="cb214-27"><a href="binomial-glm.html#cb214-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb214-28"><a href="binomial-glm.html#cb214-28" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">size=</span><span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb214-29"><a href="binomial-glm.html#cb214-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.length=</span><span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>),  </span>
+<span id="cb214-30"><a href="binomial-glm.html#cb214-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span>  <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>),</span>
+<span id="cb214-31"><a href="binomial-glm.html#cb214-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>  <span class="do">## change axis tick marks to make them a little longer</span></span>
+<span id="cb214-32"><a href="binomial-glm.html#cb214-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">#theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +</span></span>
+<span id="cb214-33"><a href="binomial-glm.html#cb214-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>)) </span>
+<span id="cb214-34"><a href="binomial-glm.html#cb214-34" aria-hidden="true" tabindex="-1"></a>plot1</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-99-1.png" width="960" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="binomial-glm.html#cb215-1" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb215-2"><a href="binomial-glm.html#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data=</span>t1 ,</span>
+<span id="cb215-3"><a href="binomial-glm.html#cb215-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, <span class="at">y=</span>surv, </span>
+<span id="cb215-4"><a href="binomial-glm.html#cb215-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">color=</span>passengerClass), </span>
+<span id="cb215-5"><a href="binomial-glm.html#cb215-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span>.<span class="dv">01</span>, <span class="at">width=</span>.<span class="dv">35</span>, </span>
+<span id="cb215-6"><a href="binomial-glm.html#cb215-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size=</span><span class="dv">1</span>, <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb215-7"><a href="binomial-glm.html#cb215-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>tm ,</span>
+<span id="cb215-8"><a href="binomial-glm.html#cb215-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x=</span>passengerClass,</span>
+<span id="cb215-9"><a href="binomial-glm.html#cb215-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y=</span>prob, <span class="at">ymin=</span>(prob<span class="sc">-</span>SE),</span>
+<span id="cb215-10"><a href="binomial-glm.html#cb215-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax=</span>(prob<span class="sc">+</span>SE), </span>
+<span id="cb215-11"><a href="binomial-glm.html#cb215-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color=</span>passengerClass), </span>
+<span id="cb215-12"><a href="binomial-glm.html#cb215-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">width=</span>.<span class="dv">2</span>, <span class="at">lwd=</span><span class="fl">1.25</span>) <span class="sc">+</span> <span class="do">## make bars thinner</span></span>
+<span id="cb215-13"><a href="binomial-glm.html#cb215-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>tm , </span>
+<span id="cb215-14"><a href="binomial-glm.html#cb215-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x=</span>passengerClass, </span>
+<span id="cb215-15"><a href="binomial-glm.html#cb215-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>prob, <span class="at">color=</span>passengerClass), <span class="at">size=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb215-16"><a href="binomial-glm.html#cb215-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sex) <span class="sc">+</span></span>
+<span id="cb215-17"><a href="binomial-glm.html#cb215-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">&#39;survival&#39;</span>, <span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb215-18"><a href="binomial-glm.html#cb215-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span>cbPalette) <span class="sc">+</span></span>
+<span id="cb215-19"><a href="binomial-glm.html#cb215-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>(),                           </span>
+<span id="cb215-20"><a href="binomial-glm.html#cb215-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">size=</span><span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb215-21"><a href="binomial-glm.html#cb215-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.length=</span><span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>),  </span>
+<span id="cb215-22"><a href="binomial-glm.html#cb215-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>),</span>
+<span id="cb215-23"><a href="binomial-glm.html#cb215-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="st">&quot;pt&quot;</span>),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb215-24"><a href="binomial-glm.html#cb215-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>)) </span>
+<span id="cb215-25"><a href="binomial-glm.html#cb215-25" aria-hidden="true" tabindex="-1"></a>plot2</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-100-1.png" width="960" style="display: block; margin: auto;" /></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="overdispersion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="module-5.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-Module_4.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
